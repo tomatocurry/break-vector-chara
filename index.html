@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><title>BREAK VECTOR v0.22 — SEEKER DRIVE</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><title>BREAK VECTOR v0.23 — PHANTOM WING</title><style>
 *{box-sizing:border-box}html,body{margin:0;height:100%;background:#07111e;color:#e5f5ff;font:14px system-ui,-apple-system,sans-serif}button,input{font:inherit}button{cursor:pointer;touch-action:none}#app{max-width:560px;margin:auto;height:100dvh;padding:calc(5px + env(safe-area-inset-top)) 6px calc(4px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:5px}#field{position:relative;min-height:0;flex:1;border-radius:12px;border:1px solid #3a617e;overflow:hidden;background:#0e253a}canvas{width:100%;height:100%;display:block;touch-action:none}#hud{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:800;pointer-events:none;text-shadow:0 2px 5px #001}#hud .meter{height:7px;border-radius:5px;overflow:hidden;background:#314157;margin:4px 0 3px;width:116px}#hud i{display:block;height:100%;width:100%;background:#74e4ce}#hud small{font-size:10px;color:#b0d0dd}#hudRight{text-align:right}#hudRight .meter{margin-left:auto}#bossHp{background:#f28aa0!important}#bossBreak{background:#efcb76!important}#scoreBar{position:absolute;left:8px;bottom:8px;right:8px;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none;text-shadow:0 2px 5px #001;font-weight:800;font-size:12px}#scoreBar b{font-size:19px;color:#fff1b1;display:block}#scoreBar em{font-style:normal;color:#f5c86b}#pause{position:absolute;right:8px;top:66px;z-index:2;background:#1a3851;border:1px solid #83a4c6;color:#fff;border-radius:6px;padding:5px;font-size:11px}#pause.hide{display:none}#ctrl{--control-x:50%;height:194px;position:relative;flex:none;background:linear-gradient(160deg,#1b3249,#0c1c31);border:1px solid #416581;border-radius:12px;overflow:hidden;touch-action:none}#actions{position:absolute;top:9px;left:clamp(119px,var(--control-x),calc(100% - 119px));transform:translateX(-50%);display:flex;gap:14px;align-items:center}.act{width:65px;height:65px;border:2px solid #b2d6ec;border-radius:50%;color:white;background:#357691;font-weight:900;white-space:nowrap}.act:disabled{opacity:.48}#def{width:77px;height:77px;background:#427c78;border-color:#a7f0e4}#def.warn{box-shadow:0 0 0 3px #f8a885,0 0 15px #ff7487}#special{background:#795982;border-color:#e4bded}#stick{position:absolute;left:clamp(119px,var(--control-x),calc(100% - 119px));top:66%;transform:translate(-50%,-50%);width:126px;height:126px;border-radius:50%;border:2px solid #80b8d8;background:#35617a80;touch-action:none}#nub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:47px;height:47px;border-radius:50%;border:2px solid #e1faff;background:#87dcf0;pointer-events:none;box-shadow:0 0 12px #86daf588}#clabel{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:10px;color:#b0cadd;pointer-events:none}#overlay{position:absolute;inset:0;z-index:5;background:#061626f5;overflow:auto;padding:17px;display:flex;flex-direction:column;gap:10px}#overlay.hide{display:none}h1{font-size:26px;color:#87e9e8;margin:0}h2{font-size:15px;margin:5px 0 0}p{font-size:13px;color:#d1e1ed;line-height:1.65;margin:0}.panel{border:1px solid #426784;background:#122c43;border-radius:10px;padding:10px;font-size:12px;line-height:1.7}.crafts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.craft{background:#183349;border:1px solid #4e7990;color:#e9f8ff;text-align:left;padding:10px;border-radius:8px;font-size:12px;line-height:1.6}.craft.selected{border:2px solid #7be4e6;background:#22516a}.settingChoice{min-width:79px;background:#183349;border:1px solid #537f95;border-radius:8px;color:#ecfbff;padding:11px 8px}.settingChoice.selected{border:2px solid #79e2d6;background:#21566a}.settingsActions{display:flex;gap:8px;justify-content:space-around;flex-wrap:wrap}.settingPreview{height:90px;position:relative;border:1px solid #51758d;border-radius:9px;background:#0e2035;overflow:hidden}.settingPreview::before{content:"A       D       S";position:absolute;left:clamp(119px,var(--preview-x),calc(100% - 119px));top:17px;transform:translateX(-50%);white-space:pre;font-size:17px;font-weight:900;color:#c5effa}.settingPreview::after{content:"◎";position:absolute;left:clamp(119px,var(--preview-x),calc(100% - 119px));top:41px;transform:translateX(-50%);font-size:30px;color:#a0e6f2}.primary{border:0;border-radius:9px;background:#6ce0d5;color:#072d36;font-weight:900;padding:12px}.rankrow{display:grid;grid-template-columns:23px 1fr auto;gap:5px;border-bottom:1px solid #37516a;padding:4px 0}input{max-width:60%;background:#11293e;border:1px solid #8bb1ca;border-radius:6px;padding:8px;color:white}@media(max-width:385px){#ctrl{height:182px}#actions{gap:9px}.act{width:60px;height:60px}#def{width:71px;height:71px}#stick{width:116px;height:116px;top:67%}}
 #hud .leftHud{display:flex;align-items:flex-start;gap:6px}#hud .lifeHud{min-width:0}#portrait{height:60px;width:52px;min-width:52px;border:1px solid #8bc6d8;border-radius:7px;background:linear-gradient(140deg,#234d68,#15334b);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 1px 9px #07131eaa}#portrait img{width:100%;height:100%;object-fit:cover}#portraitFallback{font-size:28px;color:#d6faff;font-weight:900}#hud .meter{width:92px}#dialog{position:absolute;bottom:68px;left:8px;right:8px;z-index:2;background:#061727e8;border-left:3px solid #83d8e6;border-radius:5px;padding:7px 10px;display:flex;flex-direction:column;gap:2px;pointer-events:none;box-shadow:0 2px 14px #0008}#dialog.hide{display:none}#dialog strong{font-size:10px;color:#8de8f1}#dialog span{font-size:12px;color:#edf8ff;text-shadow:0 1px 2px black}#actions .act span{font-size:11px}#special.activeMode{border-color:#ffe7a4;background:#a16a31;box-shadow:0 0 14px #ffd07d66}@media(max-width:385px){#portrait{height:50px;width:43px;min-width:43px}#hud .meter{width:79px}}
 
@@ -56,7 +56,7 @@ const models={
  sylvia:{name:'シルヴィア',hp:130,speed:270,range:265,arc:60,rate:.46,dmg:23,def:'ガード',s:'ワイドバースト',desc:'堅実型・任意解除ガード／広範囲扇形S'},
  lisa:{name:'リサ',hp:100,speed:355,range:195,arc:75,rate:.20,dmg:12,def:'回避',s:'ピンポイントブレイク',desc:'高機動型・回避／狭角強攻撃S'},
  ayame:{name:'アヤメ',hp:85,speed:205,range:425,arc:45,rate:.83,dmg:47,def:'加速',s:'ヘヴィブラスト',desc:'遠距離重火力・加速／超広域攻撃S'},
- dorothy:{name:'ドロシー',hp:110,speed:290,range:185,arc:76,rate:.43,dmg:5,def:'回避',s:'オーバーロード',desc:'自律追尾A／Sで追尾2機射出＋広域攻撃'}
+ dorothy:{name:'ドロシー',hp:110,speed:290,range:185,arc:76,rate:.43,dmg:5,def:'回避',s:'オーバーロード',desc:'通常A自律追尾／覚醒A独立攻撃ユニット＋広域攻撃'}
 };
 const lines={
  sylvia:{start:'状況確認。落ち着いて制圧するわ。',wave:'次の敵群を確認。隊列を崩すわ。',break:'今よ、畳みかける！',hurt:'っ……立て直す！',special:'前方、まとめて突破する！',boss:'大型反応！ 正面から受け止める！'},
@@ -65,15 +65,15 @@ const lines={
  dorothy:{start:'まずは準備ね。急いじゃだめ。',wave:'いいわ……少しずつ溜まってきた。',break:'面白くなってきたじゃない。',hurt:'今のは想定外……！',special:'さあ、私の時間よ。',boss:'最後に派手な幕引きといこう？'}
 };
 let ranks=[];try{ranks=JSON.parse(localStorage.getItem(KEY)||'[]').filter(r=>r&&Number.isFinite(r.score)&&typeof r.name==='string').sort((a,b)=>b.score-a.score||a.time-b.time).slice(0,5)}catch{}
-let selected='sylvia',phase='title',paused=false,p=null,enemies=[],wave=0,kills=0,spawned=0,total=0,score=0,combo=0,comboTime=0,maxCombo=0,hitStreak=0,maxHitStreak=0,elapsed=0,clock=0,cam={x:0,y:0},joy={x:0,y:0},keys={},stickId=null,last=0,bullets=[],particles=[],texts=[],shotCD=0,attackCD=0,defCD=0,guard=0,dodge=0,over=0,hitFlash=0,shake=0,notice='',noticeT=0,scut=0,scutType='',scutFired=false,phaseDelay=0,waveDamaged=false,voiceT=0,faceState='normal',faceT=0,boost=0,evadeMove=0,evadeVX=0,evadeVY=0,dorothyMode=0,skillCD=0,knockCD=0,reverseCD=0,frameVoice='',prevPortrait='',dialogQueue=[],dialogPriority=0,dash=null,dashTrails=[],knockTrails=[],dodgeOrigin=null,dodgeClaims=new Set(),seekers=[],guardJust=false;
+let selected='sylvia',phase='title',paused=false,p=null,enemies=[],wave=0,kills=0,spawned=0,total=0,score=0,combo=0,comboTime=0,maxCombo=0,hitStreak=0,maxHitStreak=0,elapsed=0,clock=0,cam={x:0,y:0},joy={x:0,y:0},keys={},stickId=null,last=0,bullets=[],particles=[],texts=[],shotCD=0,attackCD=0,defCD=0,guard=0,dodge=0,over=0,hitFlash=0,shake=0,notice='',noticeT=0,scut=0,scutType='',scutFired=false,phaseDelay=0,waveDamaged=false,voiceT=0,faceState='normal',faceT=0,boost=0,evadeMove=0,evadeVX=0,evadeVY=0,dorothyMode=0,skillCD=0,knockCD=0,reverseCD=0,frameVoice='',prevPortrait='',dialogQueue=[],dialogPriority=0,dash=null,dashTrails=[],knockTrails=[],dodgeOrigin=null,dodgeClaims=new Set(),seekers=[],drones=[],guardJust=false;
 function ranksHTML(){return `<div class="panel"><b>TOP 5 / SCORE</b>${ranks.length?ranks.map((r,i)=>`<div class="rankrow"><span>${i+1}</span><span>${esc(r.name)} <small>(${esc(models[r.unit]?.name||r.unit||'旧機体')})</small></span><span>${r.score.toLocaleString()} / ${fmt(r.time)}</span></div>`).join(''):'<p>まだ記録はありません</p>'}</div>`}
 // ============================================================
 // 2. 画面遷移：タイトル・設定画面・戦闘開始
 // ============================================================
-function title(){phase='title';paused=false;voiceT=0;dialogQueue=[];dialogPriority=0;dash=null;dodgeOrigin=null;dodgeClaims.clear();$('#dialog').classList.add('hide');$('#pause').classList.add('hide');overlay.classList.remove('hide');overlay.innerHTML=`<small>v0.22 / SEEKER DRIVE</small><h1>BREAK VECTOR</h1><p>v0.16ベースの3WAVE・スコアアタック。ヒット継続コンボ、自機追従のA/Dクールタイム、固有A攻撃、ガードと移動回避、ドロシーの自律追尾Aと覚醒中の2機射出、シルヴィアのガード任意解除を試作しました。画像なしでも動作します。</p><h2>キャラクター選択</h2><div class="crafts">${Object.entries(models).map(([id,c])=>`<button class="craft" data-unit="${id}"><b>${c.name}</b><br>${c.desc}<br>HP ${c.hp} / 速度 ${c.speed}<br>射程 ${c.range} / 射角 ${c.arc+'°'}</button>`).join('')}</div><div class="panel">WAVE 1：雑魚5機 / WAVE 2：雑魚6機 / WAVE 3：ボス<br>スティック＝移動・向き。通常射撃は扇形内で自動（ドロシーは低威力）。<br>シルヴィア：A強撃・Dガード（移動で解除）・S広角砲撃<br>リサ：A連続斬撃・D移動回避・S狭角重撃<br>アヤメ：A貫通射撃・D一時加速・S広域砲撃<br>ドロシー：自動弱射撃・A自律追尾弾・D移動回避／S覚醒9秒中はA追尾弾2機・D広域攻撃<br>PC：WASD/矢印移動、J=A、K=D、L=S</div>${ranksHTML()}<button id="settings" class="settingChoice">⚙ 操作配置の設定（${{left:"左寄り",center:"中央",right:"右寄り"}[controlPosition]}）</button><button id="start" class="primary">戦闘開始</button>`;document.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{selected=b.dataset.unit;document.querySelectorAll('[data-unit]').forEach(x=>x.classList.toggle('selected',x.dataset.unit===selected))});$(`[data-unit="${selected}"]`).classList.add('selected');$('#start').onclick=start;$('#settings').onclick=settingsScreen}
+function title(){phase='title';paused=false;voiceT=0;dialogQueue=[];dialogPriority=0;dash=null;dodgeOrigin=null;dodgeClaims.clear();$('#dialog').classList.add('hide');$('#pause').classList.add('hide');overlay.classList.remove('hide');overlay.innerHTML=`<small>v0.23 / PHANTOM WING</small><h1>BREAK VECTOR</h1><p>v0.16ベースの3WAVE・スコアアタック。ヒット継続コンボ、自機追従のA/Dクールタイム、固有A攻撃、ガードと移動回避、ドロシーの通常追尾Aと覚醒中の自律攻撃ユニット、シルヴィアのガード任意解除を試作しました。画像なしでも動作します。</p><h2>キャラクター選択</h2><div class="crafts">${Object.entries(models).map(([id,c])=>`<button class="craft" data-unit="${id}"><b>${c.name}</b><br>${c.desc}<br>HP ${c.hp} / 速度 ${c.speed}<br>射程 ${c.range} / 射角 ${c.arc+'°'}</button>`).join('')}</div><div class="panel">WAVE 1：雑魚5機 / WAVE 2：雑魚6機 / WAVE 3：ボス<br>スティック＝移動・向き。通常射撃は扇形内で自動（ドロシーは低威力）。<br>シルヴィア：A強撃・Dガード（移動で解除）・S広角砲撃<br>リサ：A連続斬撃・D移動回避・S狭角重撃<br>アヤメ：A貫通射撃・D一時加速・S広域砲撃<br>ドロシー：自動弱射撃・通常A自律追尾弾・D移動回避／S覚醒9秒中はA自律攻撃ユニット（突撃→帰還→再突撃）・D広域攻撃<br>PC：WASD/矢印移動、J=A、K=D、L=S</div>${ranksHTML()}<button id="settings" class="settingChoice">⚙ 操作配置の設定（${{left:"左寄り",center:"中央",right:"右寄り"}[controlPosition]}）</button><button id="start" class="primary">戦闘開始</button>`;document.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{selected=b.dataset.unit;document.querySelectorAll('[data-unit]').forEach(x=>x.classList.toggle('selected',x.dataset.unit===selected))});$(`[data-unit="${selected}"]`).classList.add('selected');$('#start').onclick=start;$('#settings').onclick=settingsScreen}
 function settingsScreen(){phase='title';overlay.classList.remove('hide');overlay.innerHTML=`<small>CONTROL SETTINGS / v0.19</small><h1>操作配置設定</h1><p>A・D・Sと移動スティックをまとめて配置します。狭い画面ではボタンがはみ出さない位置に自動調整します。</p><div class="panel"><b>配置</b><div class="settingsActions" style="margin:10px 0">${[['left','左寄り'],['center','中央'],['right','右寄り']].map(([id,label])=>`<button class="settingChoice ${id===controlPosition?'selected':''}" data-position="${id}">${label}</button>`).join('')}</div><div class="settingPreview" id="settingPreview" style="--preview-x:${{left:'34%',center:'50%',right:'66%'}[controlPosition]}"></div><small>選択すると即時反映され、次回起動時も保存されます。</small></div><button id="settingsBack" class="primary">タイトルへ戻る</button>`;document.querySelectorAll('[data-position]').forEach(btn=>btn.onclick=()=>{saveControlPosition(btn.dataset.position);settingsScreen()});$('#settingsBack').onclick=title}
-function start(){phase='play';paused=false;overlay.classList.add('hide');$('#pause').classList.remove('hide');p={x:WORLD.w/2,y:WORLD.h*.68,a:-Math.PI/2,hp:models[selected].hp,max:models[selected].hp,s:0};enemies=[];wave=0;kills=spawned=total=score=combo=maxCombo=hitStreak=maxHitStreak=0;comboTime=elapsed=clock=shotCD=attackCD=defCD=guard=dodge=evadeMove=evadeVX=evadeVY=over=hitFlash=shake=noticeT=scut=phaseDelay=0;waveDamaged=false;boost=dorothyMode=skillCD=knockCD=reverseCD=voiceT=faceT=0;dialogQueue=[];dialogPriority=0;dash=null;dashTrails=[];knockTrails=[];seekers=[];guardJust=false;dodgeOrigin=null;dodgeClaims.clear();faceState='normal';prevPortrait='';bullets=[];particles=[];texts=[];setPortrait('normal');nextWave();say(lines[selected].start,'normal',3.1,2);hud()}
-function nextWave(){dialogQueue=[];wave++;kills=0;spawned=0;total=wave===1?5:wave===2?6:1;enemies=[];phaseDelay=0;waveDamaged=false;notice=wave===3?'WARNING / BOSS APPROACH':'WAVE '+wave;noticeT=1.5;fillSpawns();if(wave===3)say(lines[selected].boss,'advantage',4.0,3);else if(wave===2)say(lines[selected].wave,'normal',3.0,2)}
+function start(){phase='play';paused=false;overlay.classList.add('hide');$('#pause').classList.remove('hide');p={x:WORLD.w/2,y:WORLD.h*.68,a:-Math.PI/2,hp:models[selected].hp,max:models[selected].hp,s:0};enemies=[];wave=0;kills=spawned=total=score=combo=maxCombo=hitStreak=maxHitStreak=0;comboTime=elapsed=clock=shotCD=attackCD=defCD=guard=dodge=evadeMove=evadeVX=evadeVY=over=hitFlash=shake=noticeT=scut=phaseDelay=0;waveDamaged=false;boost=dorothyMode=skillCD=knockCD=reverseCD=voiceT=faceT=0;dialogQueue=[];dialogPriority=0;dash=null;dashTrails=[];knockTrails=[];seekers=[];drones=[];guardJust=false;dodgeOrigin=null;dodgeClaims.clear();faceState='normal';prevPortrait='';bullets=[];particles=[];texts=[];setPortrait('normal');nextWave();say(lines[selected].start,'normal',3.1,2);hud()}
+function nextWave(){seekers=[];drones=[];dialogQueue=[];wave++;kills=0;spawned=0;total=wave===1?5:wave===2?6:1;enemies=[];phaseDelay=0;waveDamaged=false;notice=wave===3?'WARNING / BOSS APPROACH':'WAVE '+wave;noticeT=1.5;fillSpawns();if(wave===3)say(lines[selected].boss,'advantage',4.0,3);else if(wave===2)say(lines[selected].wave,'normal',3.0,2)}
 function fillSpawns(){const max=wave===3?1:3;while(enemies.length<max&&spawned<total){spawned++;const boss=wave===3,type=boss?'boss':wave===2&&spawned%2===0?'ranger':'grunt',angle=rand(0,Math.PI*2),r=rand(300,560),x=clamp(p.x+Math.cos(angle)*r,90,WORLD.w-90),y=clamp(p.y+Math.sin(angle)*r,90,WORLD.h-90);const hp=boss?750:type==='ranger'?115:85;enemies.push({id:spawned,type,x,y,a:angle+Math.PI,hp,max:hp,br:0,stun:0,wind:0,attackCD:rand(2.0,3.3),dir:0,recover:0,shot:0,r:boss?54:type==='ranger'?28:24,move:rand(60,100)})}}
 function particlesAt(x,y,c,n=12){for(let i=0;i<n;i++){let a=rand(-Math.PI,Math.PI),s=rand(50,220);particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,t:rand(.18,.55),max:.55,c})}}
 function floatText(x,y,label,c='#fff2b4',big=false){texts.push({x,y,label,c,t:big?1.05:.73,max:big?1.05:.73,big})}
@@ -94,7 +94,7 @@ function blastAttack(){if(dorothyMode<=0||skillCD>0)return;skillCD=.82;for(const
 // ============================================================
 // 4-A. ドロシー A：自律追尾ユニット
 // 目標を追って徐々に旋回するため、撃った瞬間に着弾しない。
-// S覚醒中は2機を別々の角度で発射。Dの広域攻撃とはクールタイムを分離。
+// 通常Aは追尾弾1機。覚醒Aは別の自律攻撃ユニットを展開。
 // ============================================================
 const SEEKER_SPEED=246;       // ドロシーの移動速度290より少し遅い
 const SEEKER_LIFE=4.2;        // 敵が遠いときに追いつく猶予
@@ -102,10 +102,10 @@ const SEEKER_TURN=2.65;       // 旋回速度 rad/秒：急旋回しすぎない
 
 function launchSeekers(){
  if(attackCD>0)return;
- const awakened=dorothyMode>0,number=awakened?2:1;
- const cap=awakened?5:2;  // 発射を連打するだけで全自動にならない上限
+ const awakened=false,number=1;
+ const cap=2;  // 発射を連打するだけで全自動にならない上限
  if(seekers.length>=cap){notice='SEEKERS ACTIVE';noticeT=.3;return;}
- attackCD=awakened?.85:1.35;
+ attackCD=1.35;
  for(let i=0;i<number&&seekers.length<cap;i++){
   const side=number===1?0:(i===0?-.23:.23);
   const dir=p.a+side;
@@ -113,11 +113,11 @@ function launchSeekers(){
   const x=p.x+Math.cos(dir)*34, y=p.y+Math.sin(dir)*34;
   seekers.push({x,y,a:dir,life:SEEKER_LIFE,max:SEEKER_LIFE,
     target:null,timer:0,trail:[],phase:Math.random()*Math.PI*2,
-    speed:SEEKER_SPEED*(awakened?1.04:1),damage:awakened?47:31,
+    speed:SEEKER_SPEED,damage:31,
     color:awakened?'#f6b5f3':'#c4b8ff'});
   particlesAt(x,y,awakened?'#ffb8ee':'#c4b8ff',8);
  }
- notice=awakened?'TWIN SEEKERS':'SEEKER LAUNCHED';noticeT=.54;
+ notice='SEEKER LAUNCHED';noticeT=.54;
  hud();
 }
 function tickSeekers(dt){
@@ -164,6 +164,87 @@ function tickSeekers(dt){
  }
  seekers=alive;
 }
+// ============================================================
+// 4-B. ドロシー覚醒A：PHANTOM WING（自律攻撃ユニット）
+// 通常のSEEKERとは独立した配列。1回命中しても消えず、
+// 「周回（orbit）→急加速突撃（strike）→帰還（return）」を繰り返す。
+// ============================================================
+const WING_LIFE=3.7;        // ユニットの活動時間（秒）
+const WING_COOL=1.25;       // Aの再使用まで（秒）
+const WING_MAX=3;           // 同時存在上限：召喚だけで戦闘が完結しないように
+const WING_STRIKE_SPEED=760; // 本体よりかなり速い。突撃の勢いを演出
+const WING_RETURN_SPEED=550;
+const WING_ATTACKS=4;      // 1機が最大で行う攻撃回数
+
+function summonWing(){
+ if(attackCD>0)return;
+ if(drones.length>=WING_MAX){notice='WING LIMIT';noticeT=.36;return;}
+ attackCD=WING_COOL;
+ // 召喚ごとに左右を変え、複数の相棒が動いているようにする。
+ const slot=drones.length,side=slot%2===0?1:-1;
+ const angle=p.a+side*1.1;
+ const x=p.x+Math.cos(angle)*49,y=p.y+Math.sin(angle)*49;
+ drones.push({x,y,a:p.a,life:WING_LIFE,max:WING_LIFE,
+   state:'orbit',stateTime:.26,slot,side,target:null,
+   hits:0,trail:[],flash:0,angle:angle,orbitTime:Math.random()*6.28});
+ particlesAt(x,y,'#f1b5ff',28);
+ floatText(x,y-23,'PHANTOM WING','#ffd4ff');
+ notice='PHANTOM WING DEPLOY';noticeT=.58;
+ shake=Math.max(shake,3);hud();
+}
+
+function tickWings(dt){
+ if(!drones.length)return;
+ const next=[];
+ for(const u of drones){
+  u.life-=dt;u.stateTime-=dt;u.orbitTime+=dt*3.6;
+  u.flash=Math.max(0,u.flash-dt);
+  if(u.life<=0){particlesAt(u.x,u.y,'#f7c1ff',10);continue;}
+  const prevX=u.x,prevY=u.y;
+  // 周回/帰還位置は移動中のドロシーを基準に都度計算する。
+  const homeAngle=u.orbitTime+u.slot*Math.PI*.78;
+  const hx=p.x+Math.cos(homeAngle)*67,hy=p.y+Math.sin(homeAngle)*67;
+  if(u.state==='orbit'&&u.stateTime<=0){
+   const candidates=enemies.filter(e=>e.hp>0&&dst(p,e)<530);
+   candidates.sort((a,b)=>dst(u,a)-dst(u,b));
+   u.target=candidates[0]||null;
+   if(u.target){u.state='strike';u.stateTime=.95;u.flash=.22;}
+   else u.stateTime=.2;
+  }
+  if(u.state==='strike'){
+   if(!u.target||u.target.hp<=0||!enemies.includes(u.target)){
+    u.state='return';u.target=null;
+   }else{
+    // 瞬間移動せず、機体が目で追える速さで敵へ突撃する。
+    const dx=u.target.x-u.x,dy=u.target.y-u.y,d=Math.hypot(dx,dy)||1;
+    const v=Math.min(WING_STRIKE_SPEED*dt,d);
+    u.x+=dx/d*v;u.y+=dy/d*v;u.a=Math.atan2(dy,dx);
+    if(d< u.target.r+18||v>=d-1){
+     const enemy=u.target,hx=enemy.x,hy=enemy.y;
+     // 既存のダメージ・コンボ・ブレイク・スコア判定を共用する。
+     tagHit(enemy,44,12);
+     particlesAt(hx,hy,'#f9c0ff',28);
+     floatText(hx,hy-42,'WING STRIKE','#f8ceff');
+     shake=Math.max(shake,4);u.flash=.23;u.hits++;
+     u.target=null;u.state='return';u.stateTime=.15;
+    }
+   }
+   if(u.state==='strike'&&u.stateTime<=0){u.state='return';u.target=null;}
+  }
+  if(u.state==='return'||u.state==='orbit'){
+   const dx=hx-u.x,dy=hy-u.y,d=Math.hypot(dx,dy)||1;
+   const speed=u.state==='return'?WING_RETURN_SPEED:340;
+   const v=Math.min(speed*dt,d);
+   u.x+=dx/d*v;u.y+=dy/d*v;u.a=Math.atan2(dy,dx);
+   if(u.state==='return'&&d<36){u.state='orbit';u.stateTime=.16;}
+  }
+  u.x=clamp(u.x,24,WORLD.w-24);u.y=clamp(u.y,24,WORLD.h-24);
+  u.trail.push({x:u.x,y:u.y});if(u.trail.length>12)u.trail.shift();
+  if(u.hits>=WING_ATTACKS){particlesAt(u.x,u.y,'#ffcafa',15);continue;}
+  next.push(u);
+ }
+ drones=next;
+}
 // 通常キャラクターのA：自動攻撃の合間に使う、クールタイム付きの能動的な攻撃。
 function activeAttack(){
  if(attackCD>0)return;
@@ -183,10 +264,10 @@ function activeAttack(){
  shake=Math.max(shake,targets.length?4:1);
  hud();
 }
-// Aボタン：通常キャラは固有攻撃。ドロシーは追尾弾（覚醒中2発）。
+// Aボタン：通常キャラは固有攻撃。ドロシーは通常時追尾／覚醒時PHANTOM WING。
 function reverse(){
  if(phase!=='play'||paused||scut>0||dash||guard>0)return;
- if(selected==='dorothy')launchSeekers();
+ if(selected==='dorothy'){if(dorothyMode>0)summonWing();else launchSeekers();}
  else activeAttack();
  hud();
 }
@@ -237,12 +318,12 @@ floatText(p.x,p.y-46,perfect?'JUST GUARD!':'GUARD!','#8bedf8',true);particlesAt(
   floatText(p.x,p.y-42,'INVINCIBLE','#b7e8ff');
  }
 }else{p.hp-=e.type==='boss'?30:wave===2?15:10;waveDamaged=true;combo=0;hitStreak=0;comboTime=0;hitFlash=.38;shake=8;floatText(p.x,p.y-35,'DAMAGE!','#ff9ba8',true);say(lines[selected].hurt,'hurt',2.8,3)}if(e.br>=100&&e.stun<=0){e.br=0;e.stun=2.55}if(p.hp<=0)finish(false)}
-function finish(win){phase='end';$('#pause').classList.add('hide');overlay.classList.remove('hide');const ok=win&&(ranks.length<5||score>ranks[ranks.length-1].score||score===ranks[ranks.length-1].score&&elapsed<ranks[ranks.length-1].time);overlay.innerHTML=`<small>MISSION REPORT / v0.22</small><h1>${win?'MISSION CLEAR':'MISSION FAILED'}</h1><p>${selected.toUpperCase()} / ${wave} WAVE<br>スコア：<b>${score.toLocaleString()}</b> / 最大撃破コンボ：${maxCombo} / 最大HIT：${maxHitStreak}<br>タイム：<b>${fmt(elapsed)}</b></p>${ok?'<div class="panel">🏆 TOP 5入賞！ <input id="pilot" maxlength="12" placeholder="PILOT"> <button id="register">登録</button></div>':''}<div id="ranking">${ranksHTML()}</div><button id="retry" class="primary">再挑戦</button><button id="home">タイトルへ</button>`;$('#retry').onclick=start;$('#home').onclick=title;if(ok)$('#register').onclick=()=>{ranks.push({name:($('#pilot').value.trim()||'PILOT').slice(0,12),score,time:elapsed,unit:selected});ranks.sort((a,b)=>b.score-a.score||a.time-b.time);ranks=ranks.slice(0,5);try{localStorage.setItem(KEY,JSON.stringify(ranks))}catch{}$('#ranking').innerHTML=ranksHTML();$('#register').parentElement.remove()}}
+function finish(win){phase='end';$('#pause').classList.add('hide');overlay.classList.remove('hide');const ok=win&&(ranks.length<5||score>ranks[ranks.length-1].score||score===ranks[ranks.length-1].score&&elapsed<ranks[ranks.length-1].time);overlay.innerHTML=`<small>MISSION REPORT / v0.23</small><h1>${win?'MISSION CLEAR':'MISSION FAILED'}</h1><p>${selected.toUpperCase()} / ${wave} WAVE<br>スコア：<b>${score.toLocaleString()}</b> / 最大撃破コンボ：${maxCombo} / 最大HIT：${maxHitStreak}<br>タイム：<b>${fmt(elapsed)}</b></p>${ok?'<div class="panel">🏆 TOP 5入賞！ <input id="pilot" maxlength="12" placeholder="PILOT"> <button id="register">登録</button></div>':''}<div id="ranking">${ranksHTML()}</div><button id="retry" class="primary">再挑戦</button><button id="home">タイトルへ</button>`;$('#retry').onclick=start;$('#home').onclick=title;if(ok)$('#register').onclick=()=>{ranks.push({name:($('#pilot').value.trim()||'PILOT').slice(0,12),score,time:elapsed,unit:selected});ranks.sort((a,b)=>b.score-a.score||a.time-b.time);ranks=ranks.slice(0,5);try{localStorage.setItem(KEY,JSON.stringify(ranks))}catch{}$('#ranking').innerHTML=ranksHTML();$('#register').parentElement.remove()}}
 // ============================================================
 // 5. UI 更新：ゲージやクールタイムを画面へ反映
 // ============================================================
 function hud(){if(!p)return;$('#hpText').textContent=`HP ${Math.max(0,Math.ceil(p.hp))}/${p.max}`;$('#hpFill').style.width=`${clamp(p.hp/p.max*100,0,100)}%`;$('#unitText').textContent=selected.toUpperCase();$('#waveText').textContent=`WAVE ${wave} / 3`;$('#targetDetail').textContent=wave===3?'BOSS / BREAK':`${kills} / ${total} ELIMINATED`;const boss=wave===3?enemies[0]:null;$('#bossHp').style.width=wave===3&&boss?`${clamp(boss.hp/boss.max*100,0,100)}%`:'0%';$('#bossBreak').style.width=wave===3&&boss?`${boss.br}%`:'0%';$('#scoreText').textContent=String(score).padStart(6,'0');$('#comboText').textContent=`${hitStreak} HIT / ×${(1+Math.min(combo,10)*.1).toFixed(1)}  ${combo?combo+' K.O.':''}`;$('#comboFill').style.width=`${clamp(comboTime/4*100,0,100)}%`;$('#sFill').style.width=`${p.s}%`;$('#sText').textContent=Math.floor(p.s)+'%';$('#timer').textContent=fmt(elapsed);$('#special').disabled=phase!=='play'||p.s<100||scut>0;$('#def').disabled=phase!=='play'||defCD>0||scut>0;$('#fire').disabled=phase!=='play'||scut>0;$('#def').classList.toggle('warn',phase==='play'&&scut<=0&&enemies.some(e=>e.wind>0)&&defCD<=0);
-$('#aLabel').textContent=selected==='dorothy'?(dorothyMode>0?'追尾×2':'追尾'):selected==='sylvia'?'強撃':selected==='lisa'?'連撃':'貫通';
+$('#aLabel').textContent=selected==='dorothy'?(dorothyMode>0?'使い魔':'追尾'):selected==='sylvia'?'強撃':selected==='lisa'?'連撃':'貫通';
 $('#dLabel').textContent=selected==='dorothy'&&dorothyMode>0?'範囲':models[selected].def;
 $('#sLabel').textContent=selected==='dorothy'&&dorothyMode>0?Math.ceil(dorothyMode)+'秒':'特殊';
 $('#unitText').textContent=models[selected].name;
@@ -252,7 +333,7 @@ $('#def').disabled=phase!=='play'||scut>0||!!dash||(selected==='dorothy'&&doroth
 $('#special').disabled=phase!=='play'||scut>0||p.s<100||dorothyMode>0;
 // 操作ボタンの進行リング：使用可能＝100%、クールタイム中＝0～100%。
 const aRemain=attackCD;
-const aMax=selected==='dorothy'?(dorothyMode>0?.85:1.35):selected==='sylvia'?1.55:selected==='lisa'?1.05:2.25;
+const aMax=selected==='dorothy'?(dorothyMode>0?WING_COOL:1.35):selected==='sylvia'?1.55:selected==='lisa'?1.05:2.25;
 const dRemain=selected==='dorothy'&&dorothyMode>0?skillCD:defCD;
 const dMax=selected==='dorothy'&&dorothyMode>0?.82:selected==='sylvia'?2.55:selected==='ayame'?4:1.75;
 const sPct=selected==='dorothy'&&dorothyMode>0?dorothyMode/9*100:p.s;
@@ -285,6 +366,7 @@ if(evadeMove>0){
 for(const trail of dashTrails)trail.t-=dt;dashTrails=dashTrails.filter(trail=>trail.t>0);for(const trail of knockTrails)trail.t-=dt;knockTrails=knockTrails.filter(trail=>trail.t>0);for(const e of [...enemies]){if(e.stun>0){e.stun=Math.max(0,e.stun-dt);e.wind=0;e.recover=Math.max(e.recover,.45);continue}if(e.wind>0){e.wind=Math.max(0,e.wind-dt);if(e.wind<=0){enemyStrike(e);e.recover=e.type==='boss'?1.2:.9}continue}if(e.recover>0){e.recover=Math.max(0,e.recover-dt);continue}let a=Math.atan2(p.y-e.y,p.x-e.x),d=dst(p,e),speed=e.move;const ideal=e.type==='ranger'?260:e.type==='boss'?270:135;if(d>ideal+20){e.x+=Math.cos(a)*speed*dt;e.y+=Math.sin(a)*speed*dt}else if(d<ideal-40){e.x-=Math.cos(a)*speed*.55*dt;e.y-=Math.sin(a)*speed*.55*dt}e.x=clamp(e.x,60,WORLD.w-60);e.y=clamp(e.y,60,WORLD.h-60);e.a=a;e.attackCD-=dt;if(e.attackCD<=0&&d<(e.type==='boss'?450:360)){e.wind=e.type==='boss'?1.5:1.25;e.dir=a;e.attackCD=e.type==='boss'?3.1:rand(2.7,3.7)}}
 // 追尾弾は通常攻撃と独立して移動・命中判定。
 tickSeekers(dt);
+tickWings(dt);
 const type=models[selected],targets=enemies.filter(e=>visibleEnemy(e)&&dst(p,e)<=type.range+e.r*.3&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),p.a))<type.arc*Math.PI/360).sort((a,b)=>dst(p,a)-dst(p,b));if(targets.length&&shotCD<=0&&guard<=0){shotCD=type.rate*(selected==='dorothy'&&dorothyMode>0?.32:1);tagHit(targets[0],type.dmg*(selected==='dorothy'&&dorothyMode>0?3.5:1),selected==='dorothy'?5:selected==='lisa'?7:selected==='ayame'?24:12)}
 for(const v of bullets)v.t-=dt;bullets=bullets.filter(v=>v.t>0);for(const v of particles){v.x+=v.vx*dt;v.y+=v.vy*dt;v.t-=dt}particles=particles.filter(v=>v.t>0);for(const v of texts){v.y-=dt*35;v.t-=dt}texts=texts.filter(v=>v.t>0);hud()}
 function fit(){let r=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(r.width*dpr));canvas.height=Math.max(1,Math.round(r.height*dpr));ctx.setTransform(dpr,0,0,dpr,0,0)}
@@ -313,6 +395,34 @@ for(const s of seekers){
  ctx.shadowBlur=0;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(0,-3,3,0,Math.PI*2);ctx.fill();
  ctx.restore();
 }
+// 覚醒Aの自律攻撃ユニット：通常追尾弾より大きな翼状シルエット。
+// 周回→高速突撃→帰還で光の軌跡を描き、味方が独立して戦う印象を強める。
+for(const u of drones){
+ const x=X(u.x),y=Y(u.y);
+ if(x< -50||x>w+50||y< -50||y>h+50)continue;
+ ctx.save();
+ for(let i=1;i<u.trail.length;i++){
+  ctx.globalAlpha=(i/u.trail.length)*.8;
+  ctx.strokeStyle=u.state==='strike'?'#fff1b5':'#db9fff';
+  ctx.lineWidth=(u.state==='strike'?9:5)*scale;
+  ctx.shadowColor='#e7a5ff';ctx.shadowBlur=8;
+  ctx.beginPath();ctx.moveTo(X(u.trail[i-1].x),Y(u.trail[i-1].y));
+  ctx.lineTo(X(u.trail[i].x),Y(u.trail[i].y));ctx.stroke();
+ }
+ ctx.globalAlpha=1;ctx.translate(x,y);ctx.rotate(u.a+Math.PI/2);
+ ctx.shadowColor=u.flash>0?'#fff0ae':'#d694ff';ctx.shadowBlur=u.flash>0?24:15;
+ ctx.fillStyle=u.state==='strike'?'#fff0b7':'#ca9dff';
+ ctx.strokeStyle='#fff4ff';ctx.lineWidth=1.6;
+ ctx.beginPath();ctx.moveTo(0,-19*scale);ctx.lineTo(16*scale,11*scale);
+ ctx.lineTo(0,4*scale);ctx.lineTo(-16*scale,11*scale);ctx.closePath();
+ ctx.fill();ctx.stroke();
+ ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(0,-3*scale,4*scale,0,Math.PI*2);ctx.fill();
+ ctx.restore();
+ // 衝突・離脱時に短い光を点滅させ、通常追尾弾との差を視覚化。
+ if(u.flash>0){ctx.save();ctx.globalAlpha=Math.min(.75,u.flash*3);
+  ctx.strokeStyle='#fff2ba';ctx.lineWidth=2;ctx.beginPath();
+  ctx.arc(x,y,29*scale,0,Math.PI*2);ctx.stroke();ctx.restore();}
+}
 if(p){const t=models[selected],px=X(p.x),py=Y(p.y),a=p.a,angle=t.arc*Math.PI/180,range=t.range*scale,locked=enemies.some(e=>visibleEnemy(e)&&dst(p,e)<t.range&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),a))<angle/2);ctx.beginPath();ctx.moveTo(px,py);ctx.arc(px,py,range,a-angle/2,a+angle/2);ctx.closePath();ctx.fillStyle=selected==='dorothy'&&dorothyMode<=0?'#9b8bba0c':locked?'#f5d27c24':'#75d4e51d';ctx.fill();ctx.strokeStyle=locked?'#f5d27c':'#77d2ea';ctx.setLineDash([5,5]);ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([])}
 for(const e of enemies){const x=X(e.x),y=Y(e.y),r=e.r*scale;if(x< -120||x>w+120||y< -120||y>h+120)continue;if(e.wind>0){ctx.fillStyle='#ed637d30';ctx.beginPath();ctx.moveTo(x,y);ctx.arc(x,y,(e.type==='boss'?420:e.type==='ranger'?330:220)*scale,e.dir-.6,e.dir+.6);ctx.closePath();ctx.fill();ctx.strokeStyle='#fa9cac';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#ffacbd';ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText('WARNING',x,y-r-21)}ctx.save();ctx.translate(x,y);ctx.rotate(e.a+Math.PI/2);ctx.fillStyle='#071520';ctx.beginPath();ctx.ellipse(0,8*scale,r*1.1,r*.85,0,0,Math.PI*2);ctx.fill();if(imgs[e.type]?.ready){const im=imgs[e.type].im;ctx.drawImage(im,-r*1.35,-r*1.35,r*2.7,r*2.7)}else{ctx.fillStyle=e.stun>0?'#d0ad69':e.type==='boss'?'#aa5e86':e.type==='ranger'?'#cc8193':'#b86578';ctx.strokeStyle='#ffd0de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-r);ctx.lineTo(r,-r*.35);ctx.lineTo(r*.8,r*.7);ctx.lineTo(0,r);ctx.lineTo(-r*.8,r*.7);ctx.lineTo(-r,-r*.35);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#ffe39a';ctx.beginPath();ctx.arc(0,0,r*.27,0,7);ctx.fill()}ctx.restore();ctx.fillStyle='#392b3f';ctx.fillRect(x-r,y-r-13,2*r,5);ctx.fillStyle='#f1859d';ctx.fillRect(x-r,y-r-13,2*r*clamp(e.hp/e.max,0,1),5);if(e.br>0){ctx.fillStyle='#f1ce83';ctx.fillRect(x-r,y-r-7,2*r*e.br/100,3)}if(e.stun>0){ctx.strokeStyle='#f4d17e';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r+7+Math.sin(clock*11)*2,0,7);ctx.stroke()}}
 if(p){const x=X(p.x),y=Y(p.y),r=25*scale;ctx.save();ctx.translate(x,y);ctx.rotate(p.a+Math.PI/2);if(imgs[selected]?.ready){ctx.drawImage(imgs[selected].im,-r*1.4,-r*1.4,2.8*r,2.8*r)}else{ctx.fillStyle=selected==='sylvia'?'#77d4e6':selected==='lisa'?'#bcb0f3':selected==='ayame'?'#ffd099':'#e6aad7';ctx.strokeStyle='#ecfaff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-r);ctx.lineTo(r*.76,r*.65);ctx.lineTo(0,r*.3);ctx.lineTo(-r*.76,r*.65);ctx.closePath();ctx.fill();ctx.stroke()}ctx.restore();if(dorothyMode>0){ctx.strokeStyle='#f3b4ff';ctx.lineWidth=5;ctx.beginPath();ctx.arc(x,y,42*scale,0,7);ctx.stroke()}if(boost>0){ctx.strokeStyle='#91f0ff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,34*scale,0,7);ctx.stroke()}if(guard>0){ctx.fillStyle='rgba(79,220,207,.13)';ctx.beginPath();ctx.arc(x,y,42*scale,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#7ff1f0';ctx.lineWidth=5;ctx.setLineDash([9,3]);ctx.beginPath();ctx.arc(x,y,40*scale,0,Math.PI*2);ctx.stroke();ctx.setLineDash([])}if(dodge>0){ctx.strokeStyle='#d2b0ff';ctx.lineWidth=4;ctx.beginPath();ctx.arc(x,y,36*scale,0,7);ctx.stroke()}
@@ -320,7 +430,7 @@ if(p){const x=X(p.x),y=Y(p.y),r=25*scale;ctx.save();ctx.translate(x,y);ctx.rotat
 // ボタンと同じ残り時間を表示。ワールド座標から算出した画面座標に固定。
 // 数字は出さず、小さなリングが満ちることで再使用可能を知らせる。
 const aRemain=attackCD;
-const aMax=selected==='dorothy'?(dorothyMode>0?.85:1.35):selected==='sylvia'?1.55:selected==='lisa'?1.05:2.25;
+const aMax=selected==='dorothy'?(dorothyMode>0?WING_COOL:1.35):selected==='sylvia'?1.55:selected==='lisa'?1.05:2.25;
 const dRemain=selected==='dorothy'&&dorothyMode>0?skillCD:defCD;
 const dMax=selected==='dorothy'&&dorothyMode>0?.82:selected==='sylvia'?2.55:selected==='ayame'?4:1.75;
 function miniRing(cx,cy,label,col,remain,max){
