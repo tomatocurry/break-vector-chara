@@ -55,7 +55,7 @@ const clamp=(n,a,b)=>Math.max(a,Math.min(b,n)),rand=(a,b)=>a+Math.random()*(b-a)
 const models={
  sylvia:{name:'シルヴィア',hp:130,speed:270,range:265,arc:60,rate:.46,dmg:23,def:'ガード',s:'ワイドバースト',desc:'堅実型・任意解除ガード／広範囲扇形S'},
  lisa:{name:'リサ',hp:100,speed:355,range:195,arc:75,rate:.20,dmg:12,def:'回避',s:'ピンポイントブレイク',desc:'高機動型・回避／狭角強攻撃S'},
- ayame:{name:'アヤメ',hp:85,speed:205,range:425,arc:45,rate:.83,dmg:47,def:'加速',s:'ヘヴィブラスト',desc:'遠距離重火力・追尾弾A／加速D・超広域S'},
+ ayame:{name:'アヤメ',hp:85,speed:205,range:425,arc:45,rate:.83,dmg:47,def:'加速',s:'ヘヴィブラスト',desc:'遠距離重火力・制圧追尾弾A／加速D・超広域S'},
  dorothy:{name:'ドロシー',hp:110,speed:290,range:185,arc:76,rate:.43,dmg:5,def:'回避',s:'オーバーロード',desc:'通常時は使い魔2機で戦闘／覚醒時は本人が突撃'}
 };
 const lines={
@@ -70,18 +70,20 @@ function ranksHTML(){return `<div class="panel"><b>TOP 5 / SCORE</b>${ranks.leng
 // ============================================================
 // 2. 画面遷移：タイトル・設定画面・戦闘開始
 // ============================================================
-function title(){phase='title';paused=false;voiceT=0;dialogQueue=[];dialogPriority=0;dash=null;dodgeOrigin=null;dodgeClaims.clear();$('#dialog').classList.add('hide');$('#pause').classList.add('hide');overlay.classList.remove('hide');overlay.innerHTML=`<small>v0.24 / FAMILIAR RUSH</small><h1>BREAK VECTOR</h1><p>v0.16ベースの3WAVE・スコアアタック。ヒット継続コンボ、自機追従のA/Dクールタイム、固有A攻撃、ガードと移動回避、ドロシーの使い魔召喚Aと覚醒中の突撃A、シルヴィアのガード任意解除を試作しました。画像なしでも動作します。</p><h2>キャラクター選択</h2><div class="crafts">${Object.entries(models).map(([id,c])=>`<button class="craft" data-unit="${id}"><b>${c.name}</b><br>${c.desc}<br>HP ${c.hp} / 速度 ${c.speed}<br>射程 ${c.range} / 射角 ${c.arc+'°'}</button>`).join('')}</div><div class="panel">WAVE 1：雑魚5機 / WAVE 2：雑魚6機 / WAVE 3：ボス<br>スティック＝移動・向き。通常射撃は扇形内で自動（ドロシーの通常時は射撃なし）。<br>シルヴィア：A強撃・Dガード（移動で解除）・S広角砲撃<br>リサ：A連続斬撃・D移動回避・S狭角重撃<br>アヤメ：A単発追尾弾・D一時加速・S広域砲撃<br>ドロシー：通常A使い魔召喚（最大2機、自律攻撃）・D回避／S覚醒9秒中は本人のA高速貫通突撃・D広域攻撃。召喚済み使い魔は覚醒中も残る<br>PC：WASD/矢印移動、J=A、K=D、L=S</div>${ranksHTML()}<button id="settings" class="settingChoice">⚙ 操作配置の設定（${{left:"左寄り",center:"中央",right:"右寄り"}[controlPosition]}）</button><button id="start" class="primary">戦闘開始</button>`;document.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{selected=b.dataset.unit;document.querySelectorAll('[data-unit]').forEach(x=>x.classList.toggle('selected',x.dataset.unit===selected))});$(`[data-unit="${selected}"]`).classList.add('selected');$('#start').onclick=start;$('#settings').onclick=settingsScreen}
+function title(){phase='title';paused=false;voiceT=0;dialogQueue=[];dialogPriority=0;dash=null;dodgeOrigin=null;dodgeClaims.clear();$('#dialog').classList.add('hide');$('#pause').classList.add('hide');overlay.classList.remove('hide');overlay.innerHTML=`<small>v0.25 / SPACING CONTROL</small><h1>BREAK VECTOR</h1><p>v0.16ベースの3WAVE・スコアアタック。ヒット継続コンボ、自機追従のA/Dクールタイム、固有A攻撃、ガードと移動回避、ドロシーの使い魔召喚Aと広範囲突撃A、シルヴィアのガード任意解除を試作しました。画像なしでも動作します。</p><h2>キャラクター選択</h2><div class="crafts">${Object.entries(models).map(([id,c])=>`<button class="craft" data-unit="${id}"><b>${c.name}</b><br>${c.desc}<br>HP ${c.hp} / 速度 ${c.speed}<br>射程 ${c.range} / 射角 ${c.arc+'°'}</button>`).join('')}</div><div class="panel">WAVE 1：雑魚5機 / WAVE 2：雑魚6機 / WAVE 3：ボス<br>スティック＝移動・向き。通常射撃は扇形内で自動（ドロシーの通常時は射撃なし）。<br>シルヴィア：A強撃・Dガード（移動で解除）・S広角砲撃<br>リサ：A連続斬撃・D移動回避・S狭角重撃<br>アヤメ：A減速・ノックバック追尾弾・D一時加速・S広域砲撃<br>ドロシー：通常A使い魔召喚（最大2機、自律攻撃）・D回避／S覚醒9秒中は本人のA高速貫通突撃・D広域攻撃。召喚済み使い魔は覚醒中も残る<br>PC：WASD/矢印移動、J=A、K=D、L=S</div>${ranksHTML()}<button id="settings" class="settingChoice">⚙ 操作配置の設定（${{left:"左寄り",center:"中央",right:"右寄り"}[controlPosition]}）</button><button id="start" class="primary">戦闘開始</button>`;document.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{selected=b.dataset.unit;document.querySelectorAll('[data-unit]').forEach(x=>x.classList.toggle('selected',x.dataset.unit===selected))});$(`[data-unit="${selected}"]`).classList.add('selected');$('#start').onclick=start;$('#settings').onclick=settingsScreen}
 function settingsScreen(){phase='title';overlay.classList.remove('hide');overlay.innerHTML=`<small>CONTROL SETTINGS / v0.19</small><h1>操作配置設定</h1><p>A・D・Sと移動スティックをまとめて配置します。狭い画面ではボタンがはみ出さない位置に自動調整します。</p><div class="panel"><b>配置</b><div class="settingsActions" style="margin:10px 0">${[['left','左寄り'],['center','中央'],['right','右寄り']].map(([id,label])=>`<button class="settingChoice ${id===controlPosition?'selected':''}" data-position="${id}">${label}</button>`).join('')}</div><div class="settingPreview" id="settingPreview" style="--preview-x:${{left:'34%',center:'50%',right:'66%'}[controlPosition]}"></div><small>選択すると即時反映され、次回起動時も保存されます。</small></div><button id="settingsBack" class="primary">タイトルへ戻る</button>`;document.querySelectorAll('[data-position]').forEach(btn=>btn.onclick=()=>{saveControlPosition(btn.dataset.position);settingsScreen()});$('#settingsBack').onclick=title}
 function start(){phase='play';paused=false;overlay.classList.add('hide');$('#pause').classList.remove('hide');p={x:WORLD.w/2,y:WORLD.h*.68,a:-Math.PI/2,hp:models[selected].hp,max:models[selected].hp,s:0};enemies=[];wave=0;kills=spawned=total=score=combo=maxCombo=hitStreak=maxHitStreak=0;comboTime=elapsed=clock=shotCD=attackCD=defCD=guard=dodge=evadeMove=evadeVX=evadeVY=over=hitFlash=shake=noticeT=scut=phaseDelay=0;waveDamaged=false;boost=dorothyMode=skillCD=knockCD=reverseCD=voiceT=faceT=0;dialogQueue=[];dialogPriority=0;dash=null;dashTrails=[];knockTrails=[];seekers=[];drones=[];guardJust=false;dodgeOrigin=null;dodgeClaims.clear();faceState='normal';prevPortrait='';bullets=[];particles=[];texts=[];setPortrait('normal');nextWave();say(lines[selected].start,'normal',3.1,2);hud()}
 function nextWave(){seekers=[];drones=[];dialogQueue=[];wave++;kills=0;spawned=0;total=wave===1?5:wave===2?6:1;enemies=[];phaseDelay=0;waveDamaged=false;notice=wave===3?'WARNING / BOSS APPROACH':'WAVE '+wave;noticeT=1.5;fillSpawns();if(wave===3)say(lines[selected].boss,'advantage',4.0,3);else if(wave===2)say(lines[selected].wave,'normal',3.0,2)}
-function fillSpawns(){const max=wave===3?1:3;while(enemies.length<max&&spawned<total){spawned++;const boss=wave===3,type=boss?'boss':wave===2&&spawned%2===0?'ranger':'grunt',angle=rand(0,Math.PI*2),r=rand(300,560),x=clamp(p.x+Math.cos(angle)*r,90,WORLD.w-90),y=clamp(p.y+Math.sin(angle)*r,90,WORLD.h-90);const hp=boss?750:type==='ranger'?115:85;enemies.push({id:spawned,type,x,y,a:angle+Math.PI,hp,max:hp,br:0,stun:0,wind:0,attackCD:rand(2.0,3.3),dir:0,recover:0,shot:0,r:boss?54:type==='ranger'?28:24,move:rand(60,100)})}}
+function fillSpawns(){const max=wave===3?1:3;while(enemies.length<max&&spawned<total){spawned++;const boss=wave===3,type=boss?'boss':wave===2&&spawned%2===0?'ranger':'grunt',angle=rand(0,Math.PI*2),r=rand(300,560),x=clamp(p.x+Math.cos(angle)*r,90,WORLD.w-90),y=clamp(p.y+Math.sin(angle)*r,90,WORLD.h-90);const hp=boss?750:type==='ranger'?115:85;enemies.push({id:spawned,type,x,y,a:angle+Math.PI,hp,max:hp,br:0,stun:0,wind:0,attackCD:rand(2.0,3.3),dir:0,recover:0,shot:0,r:boss?54:type==='ranger'?28:24,move:rand(60,100),slow:0})}}
 function particlesAt(x,y,c,n=12){for(let i=0;i<n;i++){let a=rand(-Math.PI,Math.PI),s=rand(50,220);particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,t:rand(.18,.55),max:.55,c})}}
 function floatText(x,y,label,c='#fff2b4',big=false){texts.push({x,y,label,c,t:big?1.05:.73,max:big?1.05:.73,big})}
 function addScore(pts,x,y,label=''){const gain=Math.round(pts*(1+Math.min(combo,10)*.1));score+=gain;if(label)floatText(x,y,`${label} +${gain}`,'#ffdf89',true)}
 // ============================================================
 // 3. 戦闘判定：ヒット・ブレイク・コンボ・スコア
 // ============================================================
-function tagHit(target,base,br=6,sp=false){if(!target||target.hp<=0)return;const rel=Math.abs(adiff(Math.atan2(p.y-target.y,p.x-target.x),target.a)),mult=rel>Math.PI*2/3?1.5:rel>Math.PI/3?1.3:1,flank=mult>=1.5?'BACK ATTACK':mult>1?'FLANK':'';const actual=Math.round(base*mult*(target.stun>0?2:1));target.hp-=actual;target.br=clamp(target.br+br*(mult>=1.5?1.6:mult>1?1.35:1),0,100);p.s=clamp(p.s+(sp?0:mult>1?14:9),0,100);hitStreak++;maxHitStreak=Math.max(maxHitStreak,hitStreak);comboTime=4;bullets.push({x:p.x,y:p.y,tx:target.x,ty:target.y,t:.12,sp});particlesAt(target.x,target.y,sp?'#ffe9a0':'#a9f5ff',sp?24:8);floatText(target.x,target.y-22,`${actual}${mult>1?' ×'+mult.toFixed(1):''}`,mult>1?'#ffd688':'#d6faff');if(flank&&Math.random()<.5)floatText(target.x,target.y-48,flank,'#ffd18b');if(target.br>=100&&target.stun<=0){target.br=0;target.stun=2.55;target.wind=0;floatText(target.x,target.y-55,'BREAK!','#ffe185',true);if(Math.random()<.35)say(lines[selected].break,'advantage',2.7,1);particlesAt(target.x,target.y,'#ffe185',25)}if(target.hp<=0){if(!visibleEnemy(target,0)){notice='OFFSCREEN K.O. +'+(target.type==='boss'?1000:target.type==='ranger'?200:100);noticeT=.95;}particlesAt(target.x,target.y,'#ffb6a7',30);combo++;maxCombo=Math.max(maxCombo,combo);comboTime=4;kills++;const basePts=target.type==='boss'?1000:target.type==='ranger'?200:100;addScore(basePts,target.x,target.y,'K.O.');if(mult>1)addScore(mult>=1.5?100:50,target.x,target.y-45,flank);if(target.stun>0)addScore(100,target.x,target.y-65,'BREAK FINISH');enemies=enemies.filter(e=>e!==target);if(kills>=total){if(!waveDamaged)addScore(300,p.x,p.y-40,'NO DAMAGE');if(wave===3)finish(true);else{phaseDelay=1.2;notice='WAVE CLEAR';noticeT=1.2}}else fillSpawns()}}
+function tagHit(target,base,br=6,sp=false,gaugeOverride=null){if(!target||target.hp<=0)return;const rel=Math.abs(adiff(Math.atan2(p.y-target.y,p.x-target.x),target.a)),mult=rel>Math.PI*2/3?1.5:rel>Math.PI/3?1.3:1,flank=mult>=1.5?'BACK ATTACK':mult>1?'FLANK':'';const actual=Math.round(base*mult*(target.stun>0?2:1));target.hp-=actual;target.br=clamp(target.br+br*(mult>=1.5?1.6:mult>1?1.35:1),0,100);// 使い魔の連続命中だけはゲージ上昇量を独立して抑制する。
+const sGain=gaugeOverride!==null?gaugeOverride:(sp?0:mult>1?14:9);
+p.s=clamp(p.s+sGain,0,100);hitStreak++;maxHitStreak=Math.max(maxHitStreak,hitStreak);comboTime=4;bullets.push({x:p.x,y:p.y,tx:target.x,ty:target.y,t:.12,sp});particlesAt(target.x,target.y,sp?'#ffe9a0':'#a9f5ff',sp?24:8);floatText(target.x,target.y-22,`${actual}${mult>1?' ×'+mult.toFixed(1):''}`,mult>1?'#ffd688':'#d6faff');if(flank&&Math.random()<.5)floatText(target.x,target.y-48,flank,'#ffd18b');if(target.br>=100&&target.stun<=0){target.br=0;target.stun=2.55;target.wind=0;floatText(target.x,target.y-55,'BREAK!','#ffe185',true);if(Math.random()<.35)say(lines[selected].break,'advantage',2.7,1);particlesAt(target.x,target.y,'#ffe185',25)}if(target.hp<=0){if(!visibleEnemy(target,0)){notice='OFFSCREEN K.O. +'+(target.type==='boss'?1000:target.type==='ranger'?200:100);noticeT=.95;}particlesAt(target.x,target.y,'#ffb6a7',30);combo++;maxCombo=Math.max(maxCombo,combo);comboTime=4;kills++;const basePts=target.type==='boss'?1000:target.type==='ranger'?200:100;addScore(basePts,target.x,target.y,'K.O.');if(mult>1)addScore(mult>=1.5?100:50,target.x,target.y-45,flank);if(target.stun>0)addScore(100,target.x,target.y-65,'BREAK FINISH');enemies=enemies.filter(e=>e!==target);if(kills>=total){if(!waveDamaged)addScore(300,p.x,p.y-40,'NO DAMAGE');if(wave===3)finish(true);else{phaseDelay=1.2;notice='WAVE CLEAR';noticeT=1.2}}else fillSpawns()}}
 function setPortrait(state='normal'){faceState=state;faceT=state==='normal'?0:3;const key=`${selected}_${state}`,it=imgs[key];const box=$('#portrait');if(prevPortrait===key)return;prevPortrait=key;box.innerHTML='';if(it?.ready){const im=document.createElement('img');im.src=it.im.src;im.alt=models[selected].name+' '+state;box.appendChild(im)}else{const t=document.createElement('span');t.id='portraitFallback';t.textContent=models[selected].name[0];box.appendChild(t)}}
 function showDialog(entry){$('#speaker').textContent=models[selected].name;$('#dialogText').textContent=entry.msg;$('#dialog').classList.remove('hide');voiceT=entry.duration;dialogPriority=entry.priority;if(entry.face!=='normal'){setPortrait(entry.face);faceT=Math.max(faceT,entry.duration)}}
 function say(msg,face='normal',duration=2.8,priority=1){if(!msg||phase!=='play')return;const entry={msg,face,duration,priority};if(voiceT<=0||priority>dialogPriority){if(voiceT>0&&dialogPriority>=2&&dialogQueue.length<2)dialogQueue.unshift({msg:$('#dialogText').textContent,face:faceState,duration:Math.min(voiceT,2.2),priority:dialogPriority});showDialog(entry)}else if(dialogQueue.length<3&&!dialogQueue.some(x=>x.msg===msg))dialogQueue.push(entry)}
@@ -89,7 +91,7 @@ function pushEnemy(e,distance){const a=Math.atan2(e.y-p.y,e.x-p.x);e.x=clamp(e.x
 // ============================================================
 // 4. 各キャラクターの操作：ドロシーの突撃・吹き飛ばし・防御
 // ============================================================
-// 旧版のドロシー突撃は今回のA追尾弾に置き換えた（未使用コードは削除）。
+// 覚醒中DはNOVA BURST。突撃は下の startRush() に実装。
 function blastAttack(){if(dorothyMode<=0||skillCD>0)return;skillCD=.82;for(const e of [...enemies])if(dst(p,e)<225+e.r)tagHit(e,105,24,true);particlesAt(p.x,p.y,'#ffc0e9',50);notice='NOVA BURST';noticeT=.55;shake=9}
 // ============================================================
 // 4-A. アヤメ A：自律追尾弾
@@ -100,16 +102,22 @@ const SEEKER_SPEED=246;    // アヤメ本人(205)より速いが、画面で追
 const SEEKER_LIFE=4.2;     // 追跡可能な時間
 const SEEKER_TURN=2.65;    // 旋回速度 rad/秒。急角度で曲がらない
 const SEEKER_COOL=1.55;    // アヤメAの再使用間隔
+const AYAME_SLOW_TIME=2.0;  // 移動速度低下の持続時間
+const AYAME_SLOW_RATE=.60;  // 通常移動速度の60%（40%減）
+const AYAME_PUSH=88;       // 命中時の後退距離（ボスは軽減）
 
 function launchSeekers(){
  if(attackCD>0||selected!=='ayame')return;
  attackCD=SEEKER_COOL;
  const dir=p.a,x=p.x+Math.cos(dir)*34,y=p.y+Math.sin(dir)*34;
  seekers.push({x,y,a:dir,life:SEEKER_LIFE,max:SEEKER_LIFE,
-   target:null,timer:0,trail:[],phase:Math.random()*Math.PI*2,
-   speed:SEEKER_SPEED,damage:34,color:'#ffd39a'});
- particlesAt(x,y,'#ffd39a',8);
- notice='HOMING SHOT';noticeT=.54;hud();
+   // 射出時点の接近している敵を優先する。射出後はゆっくり旋回。
+   target:enemies.filter(e=>e.hp>0&&dst(p,e)<610)
+    .sort((a,b)=>dst(p,a)-dst(p,b))[0]||null,
+   timer:0,trail:[],phase:Math.random()*Math.PI*2,
+   speed:SEEKER_SPEED,damage:20,color:'#8cecff'});
+ particlesAt(x,y,'#8cecff',10);
+ notice='REPULSE SHOT';noticeT=.54;hud();
 }
 function tickSeekers(dt){
  if(!seekers.length)return;
@@ -119,7 +127,7 @@ function tickSeekers(dt){
   if(s.life<=0){particlesAt(s.x,s.y,s.color,4);continue;}
   if(!s.target||s.target.hp<=0||!enemies.includes(s.target)){
    s.target=enemies.filter(e=>e.hp>0&&dst(s,e)<650)
-    .sort((a,b)=>dst(a,s)-dst(b,s))[0]||null;
+    .sort((a,b)=>dst(p,a)-dst(p,b))[0]||null;
   }
   if(s.target){
    const angle=Math.atan2(s.target.y-s.y,s.target.x-s.x);
@@ -138,9 +146,14 @@ function tickSeekers(dt){
   });
   if(hit){
    const hx=hit.x,hy=hit.y;
-   tagHit(hit,s.damage,13);
-   particlesAt(hx,hy,s.color,17);
-   floatText(hx,hy-32,'HOMING HIT',s.color);
+   // 命中によって距離を確保。ブレイク状態でも減速効果を蓄積する。
+   tagHit(hit,20,18);
+   if(enemies.includes(hit)){
+    hit.slow=Math.max(hit.slow||0,AYAME_SLOW_TIME);
+    pushEnemy(hit,hit.type==='boss'?AYAME_PUSH*.4:AYAME_PUSH);
+    floatText(hit.x,hit.y-39,'SLOW / PUSH','#8cecff');
+   }
+   particlesAt(hx,hy,'#83e8ff',23);
    shake=Math.max(shake,2);
   }else alive.push(s);
  }
@@ -204,7 +217,7 @@ function tickWings(dt){
     if(d< u.target.r+18||v>=d-1){
      const enemy=u.target,hx=enemy.x,hy=enemy.y;
      // 既存のダメージ・コンボ・ブレイク・スコア判定を共用する。
-     tagHit(enemy,22,9);
+     tagHit(enemy,22,9,false,3);
      particlesAt(hx,hy,'#f9c0ff',28);
      floatText(hx,hy-42,'FAMILIAR HIT','#f8ceff');
      shake=Math.max(shake,4);u.flash=.23;u.hits++;
@@ -235,12 +248,13 @@ function tickWings(dt){
 const RUSH_COOL=.82;
 const RUSH_LENGTH=238;
 const RUSH_SPEED=980;
+const RUSH_HIT_RADIUS=53; // v0.24: 29。自機中心から左右への当たり幅を拡大
 function startRush(){
  if(attackCD>0||dorothyMode<=0||dash)return;
  attackCD=RUSH_COOL;
  dash={dir:p.a,remaining:RUSH_LENGTH,hit:new Set()};
  dodge=Math.max(dodge,.27); // 突撃中の敵攻撃は受けない
- notice='PHANTOM RUSH';noticeT=.5;
+ notice='WIDE PHANTOM RUSH';noticeT=.5;
  particlesAt(p.x,p.y,'#e8b3ff',26);
  hud();
 }
@@ -257,7 +271,7 @@ function tickRush(dt){
   if(dash.hit.has(e))continue;
   const dx=p.x-prevX,dy=p.y-prevY,l2=dx*dx+dy*dy;
   const u=l2?clamp(((e.x-prevX)*dx+(e.y-prevY)*dy)/l2,0,1):0;
-  if(Math.hypot(e.x-(prevX+dx*u),e.y-(prevY+dy*u))<e.r+29){
+  if(Math.hypot(e.x-(prevX+dx*u),e.y-(prevY+dy*u))<e.r+RUSH_HIT_RADIUS){
    dash.hit.add(e);
    tagHit(e,115,26,true);
    shake=Math.max(shake,6);
@@ -289,7 +303,7 @@ function activeAttack(){
  shake=Math.max(shake,targets.length?4:1);
  hud();
 }
-// Aボタン：通常キャラは固有攻撃。ドロシーは通常時追尾／覚醒時PHANTOM WING。
+// Aボタン：通常キャラは固有攻撃。ドロシーは通常時使い魔／覚醒時突撃。
 function reverse(){
  if(phase!=='play'||paused||scut>0||dash||guard>0)return;
  if(selected==='dorothy'){if(dorothyMode>0)startRush();else summonWing();}
@@ -389,7 +403,7 @@ if(evadeMove>0){
  if(Math.random()<.75)particlesAt(p.x,p.y,'#a6d8ff',2);
 }
 tickRush(dt);
-for(const trail of dashTrails)trail.t-=dt;dashTrails=dashTrails.filter(trail=>trail.t>0);for(const trail of knockTrails)trail.t-=dt;knockTrails=knockTrails.filter(trail=>trail.t>0);for(const e of [...enemies]){if(e.stun>0){e.stun=Math.max(0,e.stun-dt);e.wind=0;e.recover=Math.max(e.recover,.45);continue}if(e.wind>0){e.wind=Math.max(0,e.wind-dt);if(e.wind<=0){enemyStrike(e);e.recover=e.type==='boss'?1.2:.9}continue}if(e.recover>0){e.recover=Math.max(0,e.recover-dt);continue}let a=Math.atan2(p.y-e.y,p.x-e.x),d=dst(p,e),speed=e.move;const ideal=e.type==='ranger'?260:e.type==='boss'?270:135;if(d>ideal+20){e.x+=Math.cos(a)*speed*dt;e.y+=Math.sin(a)*speed*dt}else if(d<ideal-40){e.x-=Math.cos(a)*speed*.55*dt;e.y-=Math.sin(a)*speed*.55*dt}e.x=clamp(e.x,60,WORLD.w-60);e.y=clamp(e.y,60,WORLD.h-60);e.a=a;e.attackCD-=dt;if(e.attackCD<=0&&d<(e.type==='boss'?450:360)){e.wind=e.type==='boss'?1.5:1.25;e.dir=a;e.attackCD=e.type==='boss'?3.1:rand(2.7,3.7)}}
+for(const trail of dashTrails)trail.t-=dt;dashTrails=dashTrails.filter(trail=>trail.t>0);for(const trail of knockTrails)trail.t-=dt;knockTrails=knockTrails.filter(trail=>trail.t>0);for(const e of [...enemies]){e.slow=Math.max(0,(e.slow||0)-dt);if(e.stun>0){e.stun=Math.max(0,e.stun-dt);e.wind=0;e.recover=Math.max(e.recover,.45);continue}if(e.wind>0){e.wind=Math.max(0,e.wind-dt);if(e.wind<=0){enemyStrike(e);e.recover=e.type==='boss'?1.2:.9}continue}if(e.recover>0){e.recover=Math.max(0,e.recover-dt);continue}let a=Math.atan2(p.y-e.y,p.x-e.x),d=dst(p,e),speed=e.move*(e.slow>0?(e.type==='boss'?.8:AYAME_SLOW_RATE):1);const ideal=e.type==='ranger'?260:e.type==='boss'?270:135;if(d>ideal+20){e.x+=Math.cos(a)*speed*dt;e.y+=Math.sin(a)*speed*dt}else if(d<ideal-40){e.x-=Math.cos(a)*speed*.55*dt;e.y-=Math.sin(a)*speed*.55*dt}e.x=clamp(e.x,60,WORLD.w-60);e.y=clamp(e.y,60,WORLD.h-60);e.a=a;e.attackCD-=dt;if(e.attackCD<=0&&d<(e.type==='boss'?450:360)){e.wind=e.type==='boss'?1.5:1.25;e.dir=a;e.attackCD=e.type==='boss'?3.1:rand(2.7,3.7)}}
 // 追尾弾は通常攻撃と独立して移動・命中判定。
 tickSeekers(dt);
 tickWings(dt);
@@ -403,8 +417,8 @@ function visibleEnemy(e,margin=22){const w=canvas.clientWidth,h=canvas.clientHei
 // 7. Canvas描画：ワールド座標→画面座標へ変換して描画
 // ============================================================
 function draw(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;const scale=viewScale(w,h);const camera=getCamera(w,h,scale);cam.x=camera.x;cam.y=camera.y;const X=n=>(n-cam.x)*scale,Y=n=>(n-cam.y)*scale;ctx.save();ctx.clearRect(0,0,w,h);ctx.translate(shake?rand(-shake,shake):0,shake?rand(-shake,shake):0);ctx.fillStyle='#10283b';ctx.fillRect(-20,-20,w+40,h+40);const size=80*scale;ctx.strokeStyle='#294c60';ctx.lineWidth=1;for(let x=-(cam.x*scale)%size;x<w;x+=size){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}for(let y=-(cam.y*scale)%size;y<h;y+=size){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}ctx.strokeStyle='#537c8d';ctx.lineWidth=3;ctx.strokeRect(X(20),Y(20),(WORLD.w-40)*scale,(WORLD.h-40)*scale);for(let x=160;x<WORLD.w;x+=420)for(let y=170;y<WORLD.h;y+=460){ctx.fillStyle='#345c6b';ctx.fillRect(X(x)-8,Y(y)-8,16*scale,16*scale);ctx.strokeStyle='#547b8c';ctx.strokeRect(X(x)-13,Y(y)-13,26*scale,26*scale)}
-for(const tr of knockTrails){ctx.save();ctx.globalAlpha=Math.max(0,tr.t/tr.max)*.65;ctx.strokeStyle='#d7b6ff';ctx.lineWidth=7*scale;ctx.setLineDash([6,9]);ctx.beginPath();ctx.moveTo(X(tr.x),Y(tr.y));ctx.lineTo(X(tr.ex),Y(tr.ey));ctx.stroke();ctx.restore()}for(const tr of dashTrails){ctx.save();ctx.globalAlpha=Math.max(0,tr.t/tr.max)*.8;ctx.strokeStyle='#e1afff';ctx.shadowColor='#d3a1ff';ctx.shadowBlur=13;ctx.lineWidth=17*scale;ctx.beginPath();ctx.moveTo(X(tr.x),Y(tr.y));ctx.lineTo(X(tr.ex),Y(tr.ey));ctx.stroke();ctx.lineWidth=4*scale;ctx.strokeStyle='#ffffff';ctx.stroke();ctx.restore()}if(dash&&p){const x=X(p.x),y=Y(p.y);ctx.save();ctx.strokeStyle='#e4b6ff';ctx.globalAlpha=.7;ctx.lineWidth=3;ctx.setLineDash([8,7]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X(p.x+Math.cos(dash.dir)*dash.remaining),Y(p.y+Math.sin(dash.dir)*dash.remaining));ctx.stroke();ctx.restore()}
-// アヤメの追尾弾：旋回方向の三角形＋軌跡。補助攻撃と主砲の違いを見せる。
+for(const tr of knockTrails){ctx.save();ctx.globalAlpha=Math.max(0,tr.t/tr.max)*.65;ctx.strokeStyle='#d7b6ff';ctx.lineWidth=7*scale;ctx.setLineDash([6,9]);ctx.beginPath();ctx.moveTo(X(tr.x),Y(tr.y));ctx.lineTo(X(tr.ex),Y(tr.ey));ctx.stroke();ctx.restore()}for(const tr of dashTrails){ctx.save();ctx.globalAlpha=Math.max(0,tr.t/tr.max)*.8;ctx.strokeStyle='#e1afff';ctx.shadowColor='#d3a1ff';ctx.shadowBlur=13;ctx.lineWidth=33*scale;ctx.beginPath();ctx.moveTo(X(tr.x),Y(tr.y));ctx.lineTo(X(tr.ex),Y(tr.ey));ctx.stroke();ctx.lineWidth=4*scale;ctx.strokeStyle='#ffffff';ctx.stroke();ctx.restore()}if(dash&&p){const x=X(p.x),y=Y(p.y);ctx.save();ctx.strokeStyle='#e4b6ff';ctx.globalAlpha=.7;ctx.lineWidth=3;ctx.setLineDash([8,7]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X(p.x+Math.cos(dash.dir)*dash.remaining),Y(p.y+Math.sin(dash.dir)*dash.remaining));ctx.stroke();ctx.restore()}
+// アヤメの制圧追尾弾：追尾してノックバックと減速を与える。
 for(const s of seekers){
  const x=X(s.x),y=Y(s.y);
  if(x< -30||x>w+30||y< -30||y>h+30)continue;
@@ -450,7 +464,7 @@ for(const u of drones){
   ctx.arc(x,y,29*scale,0,Math.PI*2);ctx.stroke();ctx.restore();}
 }
 if(p){const t=models[selected],px=X(p.x),py=Y(p.y),a=p.a,angle=t.arc*Math.PI/180,range=t.range*scale,locked=enemies.some(e=>visibleEnemy(e)&&dst(p,e)<t.range&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),a))<angle/2);ctx.beginPath();ctx.moveTo(px,py);ctx.arc(px,py,range,a-angle/2,a+angle/2);ctx.closePath();ctx.fillStyle=selected==='dorothy'&&dorothyMode<=0?'#9b8bba00':locked?'#f5d27c24':'#75d4e51d';ctx.fill();ctx.strokeStyle=locked?'#f5d27c':'#77d2ea';ctx.setLineDash([5,5]);ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([])}
-for(const e of enemies){const x=X(e.x),y=Y(e.y),r=e.r*scale;if(x< -120||x>w+120||y< -120||y>h+120)continue;if(e.wind>0){ctx.fillStyle='#ed637d30';ctx.beginPath();ctx.moveTo(x,y);ctx.arc(x,y,(e.type==='boss'?420:e.type==='ranger'?330:220)*scale,e.dir-.6,e.dir+.6);ctx.closePath();ctx.fill();ctx.strokeStyle='#fa9cac';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#ffacbd';ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText('WARNING',x,y-r-21)}ctx.save();ctx.translate(x,y);ctx.rotate(e.a+Math.PI/2);ctx.fillStyle='#071520';ctx.beginPath();ctx.ellipse(0,8*scale,r*1.1,r*.85,0,0,Math.PI*2);ctx.fill();if(imgs[e.type]?.ready){const im=imgs[e.type].im;ctx.drawImage(im,-r*1.35,-r*1.35,r*2.7,r*2.7)}else{ctx.fillStyle=e.stun>0?'#d0ad69':e.type==='boss'?'#aa5e86':e.type==='ranger'?'#cc8193':'#b86578';ctx.strokeStyle='#ffd0de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-r);ctx.lineTo(r,-r*.35);ctx.lineTo(r*.8,r*.7);ctx.lineTo(0,r);ctx.lineTo(-r*.8,r*.7);ctx.lineTo(-r,-r*.35);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#ffe39a';ctx.beginPath();ctx.arc(0,0,r*.27,0,7);ctx.fill()}ctx.restore();ctx.fillStyle='#392b3f';ctx.fillRect(x-r,y-r-13,2*r,5);ctx.fillStyle='#f1859d';ctx.fillRect(x-r,y-r-13,2*r*clamp(e.hp/e.max,0,1),5);if(e.br>0){ctx.fillStyle='#f1ce83';ctx.fillRect(x-r,y-r-7,2*r*e.br/100,3)}if(e.stun>0){ctx.strokeStyle='#f4d17e';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r+7+Math.sin(clock*11)*2,0,7);ctx.stroke()}}
+for(const e of enemies){const x=X(e.x),y=Y(e.y),r=e.r*scale;if(x< -120||x>w+120||y< -120||y>h+120)continue;if(e.wind>0){ctx.fillStyle='#ed637d30';ctx.beginPath();ctx.moveTo(x,y);ctx.arc(x,y,(e.type==='boss'?420:e.type==='ranger'?330:220)*scale,e.dir-.6,e.dir+.6);ctx.closePath();ctx.fill();ctx.strokeStyle='#fa9cac';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#ffacbd';ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText('WARNING',x,y-r-21)}ctx.save();ctx.translate(x,y);ctx.rotate(e.a+Math.PI/2);ctx.fillStyle='#071520';ctx.beginPath();ctx.ellipse(0,8*scale,r*1.1,r*.85,0,0,Math.PI*2);ctx.fill();if(imgs[e.type]?.ready){const im=imgs[e.type].im;ctx.drawImage(im,-r*1.35,-r*1.35,r*2.7,r*2.7)}else{ctx.fillStyle=e.stun>0?'#d0ad69':e.type==='boss'?'#aa5e86':e.type==='ranger'?'#cc8193':'#b86578';ctx.strokeStyle='#ffd0de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-r);ctx.lineTo(r,-r*.35);ctx.lineTo(r*.8,r*.7);ctx.lineTo(0,r);ctx.lineTo(-r*.8,r*.7);ctx.lineTo(-r,-r*.35);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#ffe39a';ctx.beginPath();ctx.arc(0,0,r*.27,0,7);ctx.fill()}ctx.restore();ctx.fillStyle='#392b3f';ctx.fillRect(x-r,y-r-13,2*r,5);ctx.fillStyle='#f1859d';ctx.fillRect(x-r,y-r-13,2*r*clamp(e.hp/e.max,0,1),5);if(e.br>0){ctx.fillStyle='#f1ce83';ctx.fillRect(x-r,y-r-7,2*r*e.br/100,3)}if(e.slow>0){ctx.strokeStyle='#83e7ff';ctx.lineWidth=2.5;ctx.setLineDash([5,4]);ctx.beginPath();ctx.arc(x,y,r+10,0,Math.PI*2);ctx.stroke();ctx.setLineDash([])}if(e.stun>0){ctx.strokeStyle='#f4d17e';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r+7+Math.sin(clock*11)*2,0,7);ctx.stroke()}}
 if(p){const x=X(p.x),y=Y(p.y),r=25*scale;ctx.save();ctx.translate(x,y);ctx.rotate(p.a+Math.PI/2);if(imgs[selected]?.ready){ctx.drawImage(imgs[selected].im,-r*1.4,-r*1.4,2.8*r,2.8*r)}else{ctx.fillStyle=selected==='sylvia'?'#77d4e6':selected==='lisa'?'#bcb0f3':selected==='ayame'?'#ffd099':'#e6aad7';ctx.strokeStyle='#ecfaff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-r);ctx.lineTo(r*.76,r*.65);ctx.lineTo(0,r*.3);ctx.lineTo(-r*.76,r*.65);ctx.closePath();ctx.fill();ctx.stroke()}ctx.restore();if(dorothyMode>0){ctx.strokeStyle='#f3b4ff';ctx.lineWidth=5;ctx.beginPath();ctx.arc(x,y,42*scale,0,7);ctx.stroke()}if(boost>0){ctx.strokeStyle='#91f0ff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,34*scale,0,7);ctx.stroke()}if(guard>0){ctx.fillStyle='rgba(79,220,207,.13)';ctx.beginPath();ctx.arc(x,y,42*scale,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#7ff1f0';ctx.lineWidth=5;ctx.setLineDash([9,3]);ctx.beginPath();ctx.arc(x,y,40*scale,0,Math.PI*2);ctx.stroke();ctx.setLineDash([])}if(dodge>0){ctx.strokeStyle='#d2b0ff';ctx.lineWidth=4;ctx.beginPath();ctx.arc(x,y,36*scale,0,7);ctx.stroke()}
 // ===== 自機追従型 A / D クールタイムインジケーター =====
 // ボタンと同じ残り時間を表示。ワールド座標から算出した画面座標に固定。
