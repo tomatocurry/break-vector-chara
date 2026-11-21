@@ -1,6 +1,6 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><title>BREAK VECTOR v0.26 — FULL FIELD DRAG</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><title>BREAK VECTOR v0.27 — ROUTE STAGE</title><style>
 *{box-sizing:border-box}html,body{margin:0;height:100%;background:#07111e;color:#e5f5ff;font:14px system-ui,-apple-system,sans-serif}button,input{font:inherit}button{cursor:pointer;touch-action:none}#app{max-width:560px;margin:auto;height:100dvh;padding:calc(5px + env(safe-area-inset-top)) 6px calc(4px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:0;position:relative}#field{position:relative;min-height:0;flex:1;border-radius:12px;border:1px solid #3a617e;overflow:hidden;background:#0e253a}canvas{width:100%;height:100%;display:block;touch-action:none}#hud{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:800;pointer-events:none;text-shadow:0 2px 5px #001}#hud .meter{height:7px;border-radius:5px;overflow:hidden;background:#314157;margin:4px 0 3px;width:116px}#hud i{display:block;height:100%;width:100%;background:#74e4ce}#hud small{font-size:10px;color:#b0d0dd}#hudRight{text-align:right}#hudRight .meter{margin-left:auto}#bossHp{background:#f28aa0!important}#bossBreak{background:#efcb76!important}#scoreBar{position:absolute;left:8px;bottom:96px;right:8px;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none;text-shadow:0 2px 5px #001;font-weight:800;font-size:12px}#scoreBar b{font-size:19px;color:#fff1b1;display:block}#scoreBar em{font-style:normal;color:#f5c86b}#pause{position:absolute;right:8px;top:66px;z-index:2;background:#1a3851;border:1px solid #83a4c6;color:#fff;border-radius:6px;padding:5px;font-size:11px}#pause.hide{display:none}#ctrl{--control-x:50%;position:absolute;inset:0;z-index:3;pointer-events:none;touch-action:none}#actions{position:absolute;left:clamp(119px,var(--control-x),calc(100% - 119px));bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:14px;align-items:center;pointer-events:auto}.act{width:65px;height:65px;border:2px solid #b2d6ec;border-radius:50%;color:white;background:#357691;font-weight:900;white-space:nowrap}.act:disabled{opacity:.48}#def{width:77px;height:77px;background:#427c78;border-color:#a7f0e4}#def.warn{box-shadow:0 0 0 3px #f8a885,0 0 15px #ff7487}#special{background:#795982;border-color:#e4bded}#stick{display:none}#nub{display:none}#clabel{position:absolute;left:0;right:0;bottom:calc(96px + env(safe-area-inset-bottom));text-align:center;font-size:10px;color:#b0cadd;pointer-events:none;text-shadow:0 2px 5px #001}#overlay{position:absolute;inset:0;z-index:5;background:#061626f5;overflow:auto;padding:17px;display:flex;flex-direction:column;gap:10px}#overlay.hide{display:none}h1{font-size:26px;color:#87e9e8;margin:0}h2{font-size:15px;margin:5px 0 0}p{font-size:13px;color:#d1e1ed;line-height:1.65;margin:0}.panel{border:1px solid #426784;background:#122c43;border-radius:10px;padding:10px;font-size:12px;line-height:1.7}.crafts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.craft{background:#183349;border:1px solid #4e7990;color:#e9f8ff;text-align:left;padding:10px;border-radius:8px;font-size:12px;line-height:1.6}.craft.selected{border:2px solid #7be4e6;background:#22516a}.settingChoice{min-width:79px;background:#183349;border:1px solid #537f95;border-radius:8px;color:#ecfbff;padding:11px 8px}.settingChoice.selected{border:2px solid #79e2d6;background:#21566a}.settingsActions{display:flex;gap:8px;justify-content:space-around;flex-wrap:wrap}.settingPreview{height:90px;position:relative;border:1px solid #51758d;border-radius:9px;background:#0e2035;overflow:hidden}.settingPreview::before{content:"A       D       S";position:absolute;left:clamp(119px,var(--preview-x),calc(100% - 119px));bottom:14px;transform:translateX(-50%);white-space:pre;font-size:17px;font-weight:900;color:#c5effa}.settingPreview::after{content:"DRAG";position:absolute;left:20px;top:33px;font-size:14px;font-weight:900;color:#a0e6f2;opacity:.8}.primary{border:0;border-radius:9px;background:#6ce0d5;color:#072d36;font-weight:900;padding:12px}.rankrow{display:grid;grid-template-columns:23px 1fr auto;gap:5px;border-bottom:1px solid #37516a;padding:4px 0}input{max-width:60%;background:#11293e;border:1px solid #8bb1ca;border-radius:6px;padding:8px;color:white}@media(max-width:385px){#actions{gap:9px}.act{width:60px;height:60px}#def{width:71px;height:71px}#scoreBar{bottom:92px}#clabel{bottom:calc(90px + env(safe-area-inset-bottom))}}
-#hud .leftHud{display:flex;align-items:flex-start;gap:6px}#hud .lifeHud{min-width:0}#portrait{height:60px;width:52px;min-width:52px;border:1px solid #8bc6d8;border-radius:7px;background:linear-gradient(140deg,#234d68,#15334b);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 1px 9px #07131eaa}#portrait img{width:100%;height:100%;object-fit:cover}#portraitFallback{font-size:28px;color:#d6faff;font-weight:900}#hud .meter{width:92px}#dialog{position:absolute;bottom:68px;left:8px;right:8px;z-index:2;background:#061727e8;border-left:3px solid #83d8e6;border-radius:5px;padding:7px 10px;display:flex;flex-direction:column;gap:2px;pointer-events:none;box-shadow:0 2px 14px #0008}#dialog.hide{display:none}#dialog strong{font-size:10px;color:#8de8f1}#dialog span{font-size:12px;color:#edf8ff;text-shadow:0 1px 2px black}#actions .act span{font-size:11px}#special.activeMode{border-color:#ffe7a4;background:#a16a31;box-shadow:0 0 14px #ffd07d66}@media(max-width:385px){#portrait{height:50px;width:43px;min-width:43px}#hud .meter{width:79px}}
+#hud .leftHud{display:flex;align-items:flex-start;gap:6px}#hud .lifeHud{min-width:0}#portrait{height:60px;width:52px;min-width:52px;border:1px solid #8bc6d8;border-radius:7px;background:linear-gradient(140deg,#234d68,#15334b);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 1px 9px #07131eaa}#portrait img{width:100%;height:100%;object-fit:cover}#portraitFallback{font-size:28px;color:#d6faff;font-weight:900}#hud .meter{width:92px}#dialog{position:absolute;bottom:205px;left:8px;right:8px;z-index:2;background:#061727e8;border-left:3px solid #83d8e6;border-radius:5px;padding:7px 10px;display:flex;flex-direction:column;gap:2px;pointer-events:none;box-shadow:0 2px 14px #0008}#dialog.hide{display:none}#dialog strong{font-size:10px;color:#8de8f1}#dialog span{font-size:12px;color:#edf8ff;text-shadow:0 1px 2px black}#actions .act span{font-size:11px}#special.activeMode{border-color:#ffe7a4;background:#a16a31;box-shadow:0 0 14px #ffd07d66}@media(max-width:385px){#portrait{height:50px;width:43px;min-width:43px}#hud .meter{width:79px}}
 
 /* ============================================================
  * v0.22  操作ボタンのクールタイム表示
@@ -31,12 +31,23 @@
 }
 #special::after { background:conic-gradient(#e7b2f3 calc(var(--ready,100) * 1%), #47334a 0); }
 #def::after { background:conic-gradient(#a9f5dc calc(var(--ready,100) * 1%), #264c4b 0); }
-#clabel { bottom:0; }
+#clabel { display:none; }
 /* 追尾弾・ガードはCanvasで描き、ボタンには別個の残り時間を反映する。 */
-</style></head><body><div id="app"><div id="field"><canvas id="screen"></canvas><div id="hud"><div class="leftHud"><div id="portrait" aria-label="キャラクターの顔"><span id="portraitFallback">S</span></div><div class="lifeHud"><span id="hpText">HP 125/125</span><div class="meter"><i id="hpFill"></i></div><small id="unitText">SYLVIA</small></div></div><div id="hudRight"><span id="waveText">WAVE 1 / 3</span><div class="meter"><i id="bossHp"></i></div><small id="targetDetail">0 / 5 ELIMINATED</small><div class="meter"><i id="bossBreak"></i></div></div></div><div id="scoreBar"><div><small>SCORE</small><b id="scoreText">000000</b><em id="comboText">0 HIT / ×1.0</em><div id="comboGauge" style="height:4px;width:138px;background:#213d51;margin-top:3px;border-radius:5px;overflow:hidden"><i id="comboFill" style="display:block;height:100%;width:0;background:#f1c56b"></i></div></div><div style="text-align:right"><small>S-GAUGE <span id="sText">0%</span></small><div style="width:110px;height:9px;background:#253e57;border-radius:8px;overflow:hidden"><i id="sFill" style="display:block;width:0;height:100%;background:#efcf81"></i></div><small id="timer">00:00.00</small></div></div><button id="pause" class="hide">一時停止</button><div id="dialog" class="hide"><strong id="speaker">SYLVIA</strong><span id="dialogText"></span></div><div id="overlay"></div></div><div id="ctrl"><div id="actions"><button id="fire" class="act">A<br><span id="aLabel">反転</span><span class="cdReadout" id="aCool"></span></button><button id="def" class="act">D<br><span id="dLabel">防御</span><span class="cdReadout" id="dCool"></span></button><button id="special" class="act">S<br><span id="sLabel">特殊</span><span class="cdReadout" id="sCool"></span></button></div><div id="stick"><div id="nub"></div></div><div id="clabel">画面ドラッグ：移動・向き　／　射撃は自動</div></div></div><script>
+
+/* v0.27: 目標は未出現分を含む残敵数。戦闘中と移動中の表示を切り替える。 */
+#areaStatus{position:absolute;z-index:2;top:88px;left:50%;transform:translateX(-50%);width:min(256px,66%);padding:5px 9px 7px;text-align:center;pointer-events:none;border:1px solid #496f87;border-radius:8px;background:#081c30c9;box-shadow:0 2px 10px #0006;text-shadow:0 1px 2px #001;color:#e0f7ff}
+#areaStatus b{display:block;font-size:11px;letter-spacing:.5px}
+#areaStatus span{font-size:11px;color:#d7e4f0}
+#areaSteps{display:flex;gap:5px;justify-content:center;margin-top:4px}
+#areaSteps i{display:block;width:30px;height:3px;border-radius:4px;background:#38546a}
+#areaSteps i.done{background:#6ce1c2}
+#areaSteps i.current{background:#ecc979}
+#areaStatus.travel{border-color:#6fe4d0}
+#areaStatus.travel span{color:#91f3d7}
+</style></head><body><div id="app"><div id="field"><canvas id="screen"></canvas><div id="hud"><div class="leftHud"><div id="portrait" aria-label="キャラクターの顔"><span id="portraitFallback">S</span></div><div class="lifeHud"><span id="hpText">HP 125/125</span><div class="meter"><i id="hpFill"></i></div><small id="unitText">SYLVIA</small></div></div><div id="hudRight"><span id="waveText">WAVE 1 / 3</span><div class="meter"><i id="bossHp"></i></div><small id="targetDetail">0 / 5 ELIMINATED</small><div class="meter"><i id="bossBreak"></i></div></div></div><div id="areaStatus"><b id="areaTitle">STAGE 01 · AREA 1/3</b><span id="objective">敵を撃破：残り5機</span><div id="areaSteps"><i class="current"></i><i></i><i></i></div></div><div id="scoreBar"><div><small>SCORE</small><b id="scoreText">000000</b><em id="comboText">0 HIT / ×1.0</em><div id="comboGauge" style="height:4px;width:138px;background:#213d51;margin-top:3px;border-radius:5px;overflow:hidden"><i id="comboFill" style="display:block;height:100%;width:0;background:#f1c56b"></i></div></div><div style="text-align:right"><small>S-GAUGE <span id="sText">0%</span></small><div style="width:110px;height:9px;background:#253e57;border-radius:8px;overflow:hidden"><i id="sFill" style="display:block;width:0;height:100%;background:#efcf81"></i></div><small id="timer">00:00.00</small></div></div><button id="pause" class="hide">一時停止</button><div id="dialog" class="hide"><strong id="speaker">SYLVIA</strong><span id="dialogText"></span></div><div id="overlay"></div></div><div id="ctrl"><div id="actions"><button id="fire" class="act">A<br><span id="aLabel">反転</span><span class="cdReadout" id="aCool"></span></button><button id="def" class="act">D<br><span id="dLabel">防御</span><span class="cdReadout" id="dCool"></span></button><button id="special" class="act">S<br><span id="sLabel">特殊</span><span class="cdReadout" id="sCool"></span></button></div><div id="stick"><div id="nub"></div></div><div id="clabel">画面ドラッグ：移動・向き　／　射撃は自動</div></div></div><script>
 (()=>{'use strict';
 const $=s=>document.querySelector(s),canvas=$('#screen'),ctx=canvas.getContext('2d'),overlay=$('#overlay');
-const KEY='break-vector-score-v1',OLD='break-vector-clear-time-v1',WORLD={w:2100,h:2600},SETTINGS_KEY='break-vector-chara-controls-v1';
+const KEY='break-vector-route-score-v1',OLD='break-vector-clear-time-v1',WORLD={w:2200,h:4400},SETTINGS_KEY='break-vector-chara-controls-v1';
 let controlPosition='center';try{const saved=localStorage.getItem(SETTINGS_KEY);if(['left','center','right'].includes(saved))controlPosition=saved}catch{}
 function applyControlPosition(){const position={left:'34%',center:'50%',right:'66%'}[controlPosition];$('#ctrl').style.setProperty('--control-x',position);}
 function saveControlPosition(next){if(!['left','center','right'].includes(next))return;controlPosition=next;applyControlPosition();try{localStorage.setItem(SETTINGS_KEY,next)}catch{}}
@@ -49,6 +60,110 @@ const ASSETS={
 for(const id of ['sylvia','lisa','ayame','dorothy'])for(const face of ['normal','hurt','advantage','special'])ASSETS[`${id}_${face}`]=`assets/portraits/${id}_${face}.png`;
 const imgs={};Object.entries(ASSETS).forEach(([key,url])=>{const im=new Image();imgs[key]={im,ready:false};im.onload=()=>{imgs[key].ready=true;if(key===`${selected}_${faceState}`&&phase==='play'){prevPortrait='';setPortrait(faceState)}};im.onerror=()=>imgs[key].ready=false;im.src=url});
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n)),rand=(a,b)=>a+Math.random()*(b-a),dst=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),adiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b)),fmt=t=>`${String(Math.floor(t/60)).padStart(2,'0')}:${(t%60).toFixed(2).padStart(5,'0')}`,esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// ============================================================
+// v0.27 ルート型ステージ：エリア／接続通路／障害物／通過判定
+// バトルエリア内は広く、通路では戦闘を発生させない構成。
+// 座標はワールド座標（画面ピクセルではありません）。
+// ============================================================
+const STAGE={
+ regions:[
+  {x:360,y:3120,w:1480,h:1000,kind:'arena',label:'01 広場'},
+  {x:910,y:2680,w:380,h:520,kind:'corridor',label:'CONNECTOR A'},
+  {x:500,y:1860,w:1200,h:890,kind:'arena',label:'02 遮蔽回廊'},
+  {x:910,y:1320,w:380,h:600,kind:'corridor',label:'CONNECTOR B'},
+  {x:330,y:270,w:1540,h:1120,kind:'arena',label:'03 ボス広場'}
+ ],
+ rooms:[
+  {id:1,name:'広場',rect:0,total:5,enterY:99999,gateY:3100},
+  {id:2,name:'遮蔽回廊',rect:2,total:6,enterY:2590,gateY:1840},
+  {id:3,name:'ボス広場',rect:4,total:1,enterY:1200,gateY:null}
+ ],
+ // 通路中央を塞がない障害物。回り込み・長射程・使い魔を比較する。
+ blocks:[
+  {x:535,y:3530,w:150,h:135}, {x:1515,y:3315,w:155,h:145},
+  {x:625,y:2260,w:150,h:165}, {x:1430,y:2065,w:150,h:175},
+  {x:1050,y:2105,w:100,h:92},
+  {x:510,y:720,w:150,h:155}, {x:1530,y:790,w:145,h:160}
+ ]
+};
+let areaState='battle'; // 'battle' = 撃破目標 / 'travel' = 次のエリアへ移動
+function insideRoomRect(x,y,r,rect){return x>=rect.x+r&&x<=rect.x+rect.w-r&&y>=rect.y+r&&y<=rect.y+rect.h-r}
+function inObstacle(x,y,r=0){return STAGE.blocks.some(b=>{const nx=clamp(x,b.x,b.x+b.w),ny=clamp(y,b.y,b.y+b.h);return Math.hypot(x-nx,y-ny)<r+2;})}
+function isWalkable(x,y,r=0,subject='player'){
+ const onFloor=STAGE.regions.some(z=>insideRoomRect(x,y,r,z));
+ if(!onFloor||inObstacle(x,y,r))return false;
+ // バトル中は次のエリアへ先行できない。敵もゲート越え不可。
+ if(areaState==='battle'&&wave<=2&&y<STAGE.rooms[wave-1].gateY+r)return false;
+ return true;
+}
+function circleMove(obj,dx,dy,r=24){
+ // 高速ダッシュでも壁をすり抜けないよう、細かく分割して軸別に判定。
+ const steps=Math.max(1,Math.ceil(Math.hypot(dx,dy)/13)),sx=dx/steps,sy=dy/steps;
+ for(let i=0;i<steps;i++){
+  if(isWalkable(obj.x+sx,obj.y,r))obj.x+=sx;
+  if(isWalkable(obj.x,obj.y+sy,r))obj.y+=sy;
+ }
+}
+function clearLine(ax,ay,bx,by){
+ // 遮蔽物だけでなく、通行不能な壁も自動射撃の射線を塞ぐ。
+ const dist=Math.hypot(bx-ax,by-ay),steps=Math.ceil(dist/26);
+ for(let i=1;i<steps;i++){
+  const t=i/steps,x=ax+(bx-ax)*t,y=ay+(by-ay)*t;
+  if(!STAGE.regions.some(z=>insideRoomRect(x,y,0,z))||inObstacle(x,y,3))return false;
+ }
+ return true;
+}
+function activeGate(){return wave<=2?STAGE.rooms[wave-1].gateY:null;}
+function enterArea(number){
+ wave=number;areaState='battle';kills=0;spawned=0;
+ total=STAGE.rooms[number-1].total;enemies=[];seekers=[];drones=[];
+ dialogQueue=[];phaseDelay=0;waveDamaged=false;
+ notice=number===3?'BOSS AREA / FINAL':'AREA '+number+' / '+STAGE.rooms[number-1].name;
+ noticeT=1.6;fillSpawns();
+ if(number===3)say(lines[selected].boss,'advantage',3.6,3);
+ else if(number===2)say(lines[selected].wave,'normal',2.7,2);
+ hud();
+}
+function maybeAdvanceArea(){
+ if(areaState!=='travel'||phase!=='play'||wave>=3)return;
+ if(p.y<=STAGE.rooms[wave].enterY){enterArea(wave+1);}
+}
+function stageDrawing(X,Y,scale){
+ ctx.save();
+ // 走行できる床の外側は暗くして、ルートと戦闘エリアを区別する。
+ for(const z of STAGE.regions){
+  const x=X(z.x),y=Y(z.y),w=z.w*scale,h=z.h*scale;
+  ctx.fillStyle=z.kind==='arena'?'#18364a':'#1a3b4e';ctx.fillRect(x,y,w,h);
+  ctx.strokeStyle=z.kind==='arena'?'#52839a':'#6794a6';ctx.lineWidth=8*scale;ctx.strokeRect(x,y,w,h);
+  ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();
+  ctx.strokeStyle='#396078';ctx.lineWidth=1;
+  for(let gx=Math.ceil(z.x/100)*100;gx<z.x+z.w;gx+=100){ctx.beginPath();ctx.moveTo(X(gx),y);ctx.lineTo(X(gx),y+h);ctx.stroke()}
+  for(let gy=Math.ceil(z.y/100)*100;gy<z.y+z.h;gy+=100){ctx.beginPath();ctx.moveTo(x,Y(gy));ctx.lineTo(x+w,Y(gy));ctx.stroke()}
+  ctx.restore();
+ }
+ for(const b of STAGE.blocks){
+  const x=X(b.x),y=Y(b.y),w=b.w*scale,h=b.h*scale;
+  ctx.fillStyle='#314c61';ctx.fillRect(x,y,w,h);
+  ctx.strokeStyle='#9fb9c7';ctx.lineWidth=3;ctx.strokeRect(x,y,w,h);
+  ctx.strokeStyle='#54768a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x+4,y+4);ctx.lineTo(x+w-4,y+h-4);ctx.moveTo(x+w-4,y+4);ctx.lineTo(x+4,y+h-4);ctx.stroke();
+ }
+ for(let i=0;i<2;i++){
+  const g=STAGE.rooms[i],y=Y(g.gateY),a=X(910),b=X(1290),closed=wave<i+1||(areaState==='battle'&&wave===i+1);
+  ctx.save();ctx.strokeStyle=closed?'#e9a46f':'#77f3d2';ctx.lineWidth=closed?7:3;
+  ctx.setLineDash(closed?[]:[12,8]);ctx.beginPath();ctx.moveTo(a,y);ctx.lineTo(b,y);ctx.stroke();ctx.setLineDash([]);
+  if(wave===i+1){
+   ctx.font='900 15px system-ui';ctx.textAlign='center';ctx.fillStyle=closed?'#f6c3a2':'#a5ffe8';
+   ctx.fillText(closed?'LOCKED':'GO ↑',(a+b)/2,y-13);
+  }
+  ctx.restore();
+ }
+ // 床面にもエリア名を記載。アセット未制作でも進行位置を把握できる。
+ for(const room of STAGE.rooms){
+  const r=STAGE.regions[room.rect];ctx.fillStyle='#a3bbca';ctx.font='800 16px system-ui';ctx.textAlign='center';
+  ctx.globalAlpha=.65;ctx.fillText('AREA '+room.id+'  /  '+room.name,X(r.x+r.w/2),Y(r.y+r.h-90));ctx.globalAlpha=1;
+ }
+ ctx.restore();
+}
 // ============================================================
 // 1. キャラクター定義：HP・移動速度・射程・射角をここで調整します
 // ============================================================
@@ -66,15 +181,35 @@ const lines={
 };
 let ranks=[];try{ranks=JSON.parse(localStorage.getItem(KEY)||'[]').filter(r=>r&&Number.isFinite(r.score)&&typeof r.name==='string').sort((a,b)=>b.score-a.score||a.time-b.time).slice(0,5)}catch{}
 let selected='sylvia',phase='title',paused=false,p=null,enemies=[],wave=0,kills=0,spawned=0,total=0,score=0,combo=0,comboTime=0,maxCombo=0,hitStreak=0,maxHitStreak=0,elapsed=0,clock=0,cam={x:0,y:0},joy={x:0,y:0},joyOrigin={x:0,y:0},keys={},movePointerId=null,last=0,bullets=[],particles=[],texts=[],shotCD=0,attackCD=0,defCD=0,guard=0,dodge=0,over=0,hitFlash=0,shake=0,notice='',noticeT=0,scut=0,scutType='',scutFired=false,phaseDelay=0,waveDamaged=false,voiceT=0,faceState='normal',faceT=0,boost=0,evadeMove=0,evadeVX=0,evadeVY=0,dorothyMode=0,skillCD=0,knockCD=0,reverseCD=0,frameVoice='',prevPortrait='',dialogQueue=[],dialogPriority=0,dash=null,dashTrails=[],knockTrails=[],dodgeOrigin=null,dodgeClaims=new Set(),seekers=[],drones=[],guardJust=false;
-function ranksHTML(){return `<div class="panel"><b>TOP 5 / SCORE</b>${ranks.length?ranks.map((r,i)=>`<div class="rankrow"><span>${i+1}</span><span>${esc(r.name)} <small>(${esc(models[r.unit]?.name||r.unit||'旧機体')})</small></span><span>${r.score.toLocaleString()} / ${fmt(r.time)}</span></div>`).join(''):'<p>まだ記録はありません</p>'}</div>`}
+function ranksHTML(){return `<div class="panel"><b>TOP 5 / STAGE 01</b>${ranks.length?ranks.map((r,i)=>`<div class="rankrow"><span>${i+1}</span><span>${esc(r.name)} <small>(${esc(models[r.unit]?.name||r.unit||'旧機体')})</small></span><span>${r.score.toLocaleString()} / ${fmt(r.time)}</span></div>`).join(''):'<p>まだ記録はありません</p>'}</div>`}
 // ============================================================
 // 2. 画面遷移：タイトル・設定画面・戦闘開始
 // ============================================================
-function title(){phase='title';paused=false;voiceT=0;dialogQueue=[];dialogPriority=0;dash=null;dodgeOrigin=null;dodgeClaims.clear();$('#dialog').classList.add('hide');$('#pause').classList.add('hide');overlay.classList.remove('hide');overlay.innerHTML=`<small>v0.26 / FULL FIELD DRAG</small><h1>BREAK VECTOR</h1><p>v0.16ベースの3WAVE・スコアアタック。ヒット継続コンボ、自機追従のA/Dクールタイム、固有A攻撃、ガードと移動回避、ドロシーの使い魔召喚Aと広範囲突撃A、シルヴィアのガード任意解除を試作しました。画像なしでも動作します。</p><h2>キャラクター選択</h2><div class="crafts">${Object.entries(models).map(([id,c])=>`<button class="craft" data-unit="${id}"><b>${c.name}</b><br>${c.desc}<br>HP ${c.hp} / 速度 ${c.speed}<br>射程 ${c.range} / 射角 ${c.arc+'°'}</button>`).join('')}</div><div class="panel">WAVE 1：雑魚5機 / WAVE 2：雑魚6機 / WAVE 3：ボス<br>画面ドラッグ＝移動・向き。通常射撃は扇形内で自動（ドロシーの通常時は射撃なし）。<br>シルヴィア：A強撃・Dガード（移動で解除）・S広角砲撃<br>リサ：A連続斬撃・D移動回避・S狭角重撃<br>アヤメ：A減速・ノックバック追尾弾・D一時加速・S広域砲撃<br>ドロシー：通常A使い魔召喚（最大2機、自律攻撃）・D回避／S覚醒9秒中は本人のA高速貫通突撃・D広域攻撃。召喚済み使い魔は覚醒中も残る<br>PC：WASD/矢印移動、J=A、K=D、L=S</div>${ranksHTML()}<button id="settings" class="settingChoice">⚙ 操作配置の設定（${{left:"左寄り",center:"中央",right:"右寄り"}[controlPosition]}）</button><button id="start" class="primary">戦闘開始</button>`;document.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{selected=b.dataset.unit;document.querySelectorAll('[data-unit]').forEach(x=>x.classList.toggle('selected',x.dataset.unit===selected))});$(`[data-unit="${selected}"]`).classList.add('selected');$('#start').onclick=start;$('#settings').onclick=settingsScreen}
-function settingsScreen(){phase='title';overlay.classList.remove('hide');overlay.innerHTML=`<small>CONTROL SETTINGS / v0.26</small><h1>操作配置設定</h1><p>A・D・Sボタンの配置を変更します。移動はフィールド全体のドラッグ操作です。狭い画面ではボタンがはみ出さない位置に自動調整します。</p><div class="panel"><b>配置</b><div class="settingsActions" style="margin:10px 0">${[['left','左寄り'],['center','中央'],['right','右寄り']].map(([id,label])=>`<button class="settingChoice ${id===controlPosition?'selected':''}" data-position="${id}">${label}</button>`).join('')}</div><div class="settingPreview" id="settingPreview" style="--preview-x:${{left:'34%',center:'50%',right:'66%'}[controlPosition]}"></div><small>選択すると即時反映され、次回起動時も保存されます。</small></div><button id="settingsBack" class="primary">タイトルへ戻る</button>`;document.querySelectorAll('[data-position]').forEach(btn=>btn.onclick=()=>{saveControlPosition(btn.dataset.position);settingsScreen()});$('#settingsBack').onclick=title}
-function start(){phase='play';paused=false;overlay.classList.add('hide');$('#pause').classList.remove('hide');p={x:WORLD.w/2,y:WORLD.h*.68,a:-Math.PI/2,hp:models[selected].hp,max:models[selected].hp,s:0};enemies=[];wave=0;kills=spawned=total=score=combo=maxCombo=hitStreak=maxHitStreak=0;comboTime=elapsed=clock=shotCD=attackCD=defCD=guard=dodge=evadeMove=evadeVX=evadeVY=over=hitFlash=shake=noticeT=scut=phaseDelay=0;waveDamaged=false;boost=dorothyMode=skillCD=knockCD=reverseCD=voiceT=faceT=0;dialogQueue=[];dialogPriority=0;dash=null;dashTrails=[];knockTrails=[];seekers=[];drones=[];guardJust=false;dodgeOrigin=null;dodgeClaims.clear();faceState='normal';prevPortrait='';bullets=[];particles=[];texts=[];setPortrait('normal');nextWave();say(lines[selected].start,'normal',3.1,2);hud()}
-function nextWave(){seekers=[];drones=[];dialogQueue=[];wave++;kills=0;spawned=0;total=wave===1?5:wave===2?6:1;enemies=[];phaseDelay=0;waveDamaged=false;notice=wave===3?'WARNING / BOSS APPROACH':'WAVE '+wave;noticeT=1.5;fillSpawns();if(wave===3)say(lines[selected].boss,'advantage',4.0,3);else if(wave===2)say(lines[selected].wave,'normal',3.0,2)}
-function fillSpawns(){const max=wave===3?1:3;while(enemies.length<max&&spawned<total){spawned++;const boss=wave===3,type=boss?'boss':wave===2&&spawned%2===0?'ranger':'grunt',angle=rand(0,Math.PI*2),r=rand(300,560),x=clamp(p.x+Math.cos(angle)*r,90,WORLD.w-90),y=clamp(p.y+Math.sin(angle)*r,90,WORLD.h-90);const hp=boss?750:type==='ranger'?115:85;enemies.push({id:spawned,type,x,y,a:angle+Math.PI,hp,max:hp,br:0,stun:0,wind:0,attackCD:rand(2.0,3.3),dir:0,recover:0,shot:0,r:boss?54:type==='ranger'?28:24,move:rand(60,100),slow:0})}}
+function title(){phase='title';paused=false;voiceT=0;dialogQueue=[];dialogPriority=0;dash=null;dodgeOrigin=null;dodgeClaims.clear();$('#dialog').classList.add('hide');$('#pause').classList.add('hide');overlay.classList.remove('hide');overlay.innerHTML=`<small>v0.27 / ROUTE STAGE</small><h1>BREAK VECTOR</h1><p>STAGE 01：広場 → 障害物のある回廊 → ボスエリア。移動と射線、位置取りの変化を試す3エリア構成です。4機の性能やA/D/S操作はv0.26を維持しました。画像素材がなくても遊べます。</p><h2>キャラクター選択</h2><div class="crafts">${Object.entries(models).map(([id,c])=>`<button class="craft" data-unit="${id}"><b>${c.name}</b><br>${c.desc}<br>HP ${c.hp} / 速度 ${c.speed}<br>射程 ${c.range} / 射角 ${c.arc+'°'}</button>`).join('')}</div><div class="panel">AREA 1 広場：雑魚5機 → AREA 2 遮蔽回廊：雑魚6機 → AREA 3 ボス広場：ボス1機。敵全滅でゲートが開き、上へ進むと次のエリア開始。残り敵数は未出現分も含みます。<br>画面ドラッグ＝移動・向き。通常射撃は扇形内で自動（ドロシーの通常時は射撃なし）。<br>シルヴィア：A強撃・Dガード（移動で解除）・S広角砲撃<br>リサ：A連続斬撃・D移動回避・S狭角重撃<br>アヤメ：A減速・ノックバック追尾弾・D一時加速・S広域砲撃<br>ドロシー：通常A使い魔召喚（最大2機、自律攻撃）・D回避／S覚醒9秒中は本人のA高速貫通突撃・D広域攻撃。召喚済み使い魔は覚醒中も残る<br>PC：WASD/矢印移動、J=A、K=D、L=S</div>${ranksHTML()}<button id="settings" class="settingChoice">⚙ 操作配置の設定（${{left:"左寄り",center:"中央",right:"右寄り"}[controlPosition]}）</button><button id="start" class="primary">戦闘開始</button>`;document.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{selected=b.dataset.unit;document.querySelectorAll('[data-unit]').forEach(x=>x.classList.toggle('selected',x.dataset.unit===selected))});$(`[data-unit="${selected}"]`).classList.add('selected');$('#start').onclick=start;$('#settings').onclick=settingsScreen}
+function settingsScreen(){phase='title';overlay.classList.remove('hide');overlay.innerHTML=`<small>CONTROL SETTINGS / v0.27</small><h1>操作配置設定</h1><p>A・D・Sボタンの配置を変更します。移動はフィールド全体のドラッグ操作です。狭い画面ではボタンがはみ出さない位置に自動調整します。</p><div class="panel"><b>配置</b><div class="settingsActions" style="margin:10px 0">${[['left','左寄り'],['center','中央'],['right','右寄り']].map(([id,label])=>`<button class="settingChoice ${id===controlPosition?'selected':''}" data-position="${id}">${label}</button>`).join('')}</div><div class="settingPreview" id="settingPreview" style="--preview-x:${{left:'34%',center:'50%',right:'66%'}[controlPosition]}"></div><small>選択すると即時反映され、次回起動時も保存されます。</small></div><button id="settingsBack" class="primary">タイトルへ戻る</button>`;document.querySelectorAll('[data-position]').forEach(btn=>btn.onclick=()=>{saveControlPosition(btn.dataset.position);settingsScreen()});$('#settingsBack').onclick=title}
+function start(){phase='play';paused=false;overlay.classList.add('hide');$('#pause').classList.remove('hide');p={x:1100,y:3860,a:-Math.PI/2,hp:models[selected].hp,max:models[selected].hp,s:0};enemies=[];wave=0;areaState='battle';resetDrag();kills=spawned=total=score=combo=maxCombo=hitStreak=maxHitStreak=0;comboTime=elapsed=clock=shotCD=attackCD=defCD=guard=dodge=evadeMove=evadeVX=evadeVY=over=hitFlash=shake=noticeT=scut=phaseDelay=0;waveDamaged=false;boost=dorothyMode=skillCD=knockCD=reverseCD=voiceT=faceT=0;dialogQueue=[];dialogPriority=0;dash=null;dashTrails=[];knockTrails=[];seekers=[];drones=[];guardJust=false;dodgeOrigin=null;dodgeClaims.clear();faceState='normal';prevPortrait='';bullets=[];particles=[];texts=[];setPortrait('normal');enterArea(1);say(lines[selected].start,'normal',3.1,2);hud()}
+function fillSpawns(){
+ const max=wave===3?1:3,room=STAGE.regions[STAGE.rooms[wave-1].rect];
+ while(enemies.length<max&&spawned<total){
+  spawned++;
+  const boss=wave===3,type=boss?'boss':wave===2&&spawned%2===0?'ranger':'grunt';
+  const radius=boss?54:type==='ranger'?28:24;
+  let x=room.x+room.w/2,y=room.y+room.h/2;
+  if(boss){x=1100;y=690;}
+  else{
+   let found=false;
+   for(let tryNo=0;tryNo<85;tryNo++){
+    const angle=rand(0,Math.PI*2),d=rand(245,510);
+    const tx=clamp(p.x+Math.cos(angle)*d,room.x+100,room.x+room.w-100);
+    const ty=clamp(p.y+Math.sin(angle)*d,room.y+100,room.y+room.h-100);
+    if(insideRoomRect(tx,ty,radius+35,room)&&!inObstacle(tx,ty,radius+30)&&Math.hypot(tx-p.x,ty-p.y)>180){x=tx;y=ty;found=true;break;}
+   }
+   if(!found){x=room.x+room.w*.5+rand(-120,120);y=room.y+room.h*.5+rand(-100,100);}
+  }
+  const hp=boss?750:type==='ranger'?115:85;
+  enemies.push({id:wave*100+spawned,type,x,y,a:Math.atan2(p.y-y,p.x-x),hp,max:hp,br:0,stun:0,wind:0,attackCD:rand(2,3.3),dir:0,recover:0,shot:0,r:radius,move:rand(60,100),slow:0});
+ }
+}
 function particlesAt(x,y,c,n=12){for(let i=0;i<n;i++){let a=rand(-Math.PI,Math.PI),s=rand(50,220);particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,t:rand(.18,.55),max:.55,c})}}
 function floatText(x,y,label,c='#fff2b4',big=false){texts.push({x,y,label,c,t:big?1.05:.73,max:big?1.05:.73,big})}
 function addScore(pts,x,y,label=''){const gain=Math.round(pts*(1+Math.min(combo,10)*.1));score+=gain;if(label)floatText(x,y,`${label} +${gain}`,'#ffdf89',true)}
@@ -83,16 +218,16 @@ function addScore(pts,x,y,label=''){const gain=Math.round(pts*(1+Math.min(combo,
 // ============================================================
 function tagHit(target,base,br=6,sp=false,gaugeOverride=null){if(!target||target.hp<=0)return;const rel=Math.abs(adiff(Math.atan2(p.y-target.y,p.x-target.x),target.a)),mult=rel>Math.PI*2/3?1.5:rel>Math.PI/3?1.3:1,flank=mult>=1.5?'BACK ATTACK':mult>1?'FLANK':'';const actual=Math.round(base*mult*(target.stun>0?2:1));target.hp-=actual;target.br=clamp(target.br+br*(mult>=1.5?1.6:mult>1?1.35:1),0,100);// 使い魔の連続命中だけはゲージ上昇量を独立して抑制する。
 const sGain=gaugeOverride!==null?gaugeOverride:(sp?0:mult>1?14:9);
-p.s=clamp(p.s+sGain,0,100);hitStreak++;maxHitStreak=Math.max(maxHitStreak,hitStreak);comboTime=4;bullets.push({x:p.x,y:p.y,tx:target.x,ty:target.y,t:.12,sp});particlesAt(target.x,target.y,sp?'#ffe9a0':'#a9f5ff',sp?24:8);floatText(target.x,target.y-22,`${actual}${mult>1?' ×'+mult.toFixed(1):''}`,mult>1?'#ffd688':'#d6faff');if(flank&&Math.random()<.5)floatText(target.x,target.y-48,flank,'#ffd18b');if(target.br>=100&&target.stun<=0){target.br=0;target.stun=2.55;target.wind=0;floatText(target.x,target.y-55,'BREAK!','#ffe185',true);if(Math.random()<.35)say(lines[selected].break,'advantage',2.7,1);particlesAt(target.x,target.y,'#ffe185',25)}if(target.hp<=0){if(!visibleEnemy(target,0)){notice='OFFSCREEN K.O. +'+(target.type==='boss'?1000:target.type==='ranger'?200:100);noticeT=.95;}particlesAt(target.x,target.y,'#ffb6a7',30);combo++;maxCombo=Math.max(maxCombo,combo);comboTime=4;kills++;const basePts=target.type==='boss'?1000:target.type==='ranger'?200:100;addScore(basePts,target.x,target.y,'K.O.');if(mult>1)addScore(mult>=1.5?100:50,target.x,target.y-45,flank);if(target.stun>0)addScore(100,target.x,target.y-65,'BREAK FINISH');enemies=enemies.filter(e=>e!==target);if(kills>=total){if(!waveDamaged)addScore(300,p.x,p.y-40,'NO DAMAGE');if(wave===3)finish(true);else{phaseDelay=1.2;notice='WAVE CLEAR';noticeT=1.2}}else fillSpawns()}}
+p.s=clamp(p.s+sGain,0,100);hitStreak++;maxHitStreak=Math.max(maxHitStreak,hitStreak);comboTime=4;bullets.push({x:p.x,y:p.y,tx:target.x,ty:target.y,t:.12,sp});particlesAt(target.x,target.y,sp?'#ffe9a0':'#a9f5ff',sp?24:8);floatText(target.x,target.y-22,`${actual}${mult>1?' ×'+mult.toFixed(1):''}`,mult>1?'#ffd688':'#d6faff');if(flank&&Math.random()<.5)floatText(target.x,target.y-48,flank,'#ffd18b');if(target.br>=100&&target.stun<=0){target.br=0;target.stun=2.55;target.wind=0;floatText(target.x,target.y-55,'BREAK!','#ffe185',true);if(Math.random()<.35)say(lines[selected].break,'advantage',2.7,1);particlesAt(target.x,target.y,'#ffe185',25)}if(target.hp<=0){if(!visibleEnemy(target,0)){notice='OFFSCREEN K.O. +'+(target.type==='boss'?1000:target.type==='ranger'?200:100);noticeT=.95;}particlesAt(target.x,target.y,'#ffb6a7',30);combo++;maxCombo=Math.max(maxCombo,combo);comboTime=4;kills++;const basePts=target.type==='boss'?1000:target.type==='ranger'?200:100;addScore(basePts,target.x,target.y,'K.O.');if(mult>1)addScore(mult>=1.5?100:50,target.x,target.y-45,flank);if(target.stun>0)addScore(100,target.x,target.y-65,'BREAK FINISH');enemies=enemies.filter(e=>e!==target);if(kills>=total){if(!waveDamaged)addScore(300,p.x,p.y-40,'NO DAMAGE');if(wave===3)finish(true);else{areaState='travel';notice='AREA CLEAR / GO ↑';noticeT=1.5;floatText(p.x,p.y-75,'NEXT AREA ↑','#8af5d2',true)}}else fillSpawns()}}
 function setPortrait(state='normal'){faceState=state;faceT=state==='normal'?0:3;const key=`${selected}_${state}`,it=imgs[key];const box=$('#portrait');if(prevPortrait===key)return;prevPortrait=key;box.innerHTML='';if(it?.ready){const im=document.createElement('img');im.src=it.im.src;im.alt=models[selected].name+' '+state;box.appendChild(im)}else{const t=document.createElement('span');t.id='portraitFallback';t.textContent=models[selected].name[0];box.appendChild(t)}}
 function showDialog(entry){$('#speaker').textContent=models[selected].name;$('#dialogText').textContent=entry.msg;$('#dialog').classList.remove('hide');voiceT=entry.duration;dialogPriority=entry.priority;if(entry.face!=='normal'){setPortrait(entry.face);faceT=Math.max(faceT,entry.duration)}}
 function say(msg,face='normal',duration=2.8,priority=1){if(!msg||phase!=='play')return;const entry={msg,face,duration,priority};if(voiceT<=0||priority>dialogPriority){if(voiceT>0&&dialogPriority>=2&&dialogQueue.length<2)dialogQueue.unshift({msg:$('#dialogText').textContent,face:faceState,duration:Math.min(voiceT,2.2),priority:dialogPriority});showDialog(entry)}else if(dialogQueue.length<3&&!dialogQueue.some(x=>x.msg===msg))dialogQueue.push(entry)}
-function pushEnemy(e,distance){const a=Math.atan2(e.y-p.y,e.x-p.x);e.x=clamp(e.x+Math.cos(a)*distance,60,WORLD.w-60);e.y=clamp(e.y+Math.sin(a)*distance,60,WORLD.h-60);e.recover=Math.max(e.recover,.3)}
+function pushEnemy(e,distance){const a=Math.atan2(e.y-p.y,e.x-p.x);circleMove(e,Math.cos(a)*distance,Math.sin(a)*distance,e.r);e.recover=Math.max(e.recover,.3)}
 // ============================================================
 // 4. 各キャラクターの操作：ドロシーの突撃・吹き飛ばし・防御
 // ============================================================
 // 覚醒中DはNOVA BURST。突撃は下の startRush() に実装。
-function blastAttack(){if(dorothyMode<=0||skillCD>0)return;skillCD=.82;for(const e of [...enemies])if(dst(p,e)<225+e.r)tagHit(e,105,24,true);particlesAt(p.x,p.y,'#ffc0e9',50);notice='NOVA BURST';noticeT=.55;shake=9}
+function blastAttack(){if(dorothyMode<=0||skillCD>0)return;skillCD=.82;for(const e of [...enemies])if(dst(p,e)<225+e.r&&clearLine(p.x,p.y,e.x,e.y))tagHit(e,105,24,true);particlesAt(p.x,p.y,'#ffc0e9',50);notice='NOVA BURST';noticeT=.55;shake=9}
 // ============================================================
 // 4-A. アヤメ A：自律追尾弾
 // 発射後に正面から飛び出し、敵へゆっくり向きを変える。
@@ -135,8 +270,15 @@ function tickSeekers(dt){
    s.a+=clamp(adiff(desired,s.a),-SEEKER_TURN*dt,SEEKER_TURN*dt);
   }else s.a+=Math.sin(s.timer*2.7+s.phase)*.38*dt;
   const prev={x:s.x,y:s.y};
-  s.x=clamp(s.x+Math.cos(s.a)*s.speed*dt,24,WORLD.w-24);
-  s.y=clamp(s.y+Math.sin(s.a)*s.speed*dt,24,WORLD.h-24);
+  // 追尾弾は遮蔽物を貫通しない。左右へ迂回できれば進路変更する。
+  let nx=s.x+Math.cos(s.a)*s.speed*dt,ny=s.y+Math.sin(s.a)*s.speed*dt;
+  if(!isWalkable(nx,ny,8,'projectile')){
+   const angles=[.6,-.6,1.2,-1.2,Math.PI];let routed=false;
+   for(const offset of angles){const a=s.a+offset,tx=s.x+Math.cos(a)*s.speed*dt,ty=s.y+Math.sin(a)*s.speed*dt;
+    if(isWalkable(tx,ty,8,'projectile')){s.a=a;nx=tx;ny=ty;routed=true;break;}}
+   if(!routed){s.life=0;particlesAt(s.x,s.y,'#91deef',7);continue;}
+  }
+  s.x=nx;s.y=ny;
   s.trail.push({x:s.x,y:s.y});if(s.trail.length>9)s.trail.shift();
   // 移動線分と敵の距離を比較し、高フレーム負荷でもすり抜けを防ぐ。
   const hit=enemies.find(e=>{
@@ -262,8 +404,7 @@ function tickRush(dt){
  if(!dash)return;
  const prevX=p.x,prevY=p.y;
  const step=Math.min(dash.remaining,RUSH_SPEED*dt);
- p.x=clamp(p.x+Math.cos(dash.dir)*step,25,WORLD.w-25);
- p.y=clamp(p.y+Math.sin(dash.dir)*step,25,WORLD.h-25);
+ circleMove(p,Math.cos(dash.dir)*step,Math.sin(dash.dir)*step,25);
  const moved=Math.hypot(p.x-prevX,p.y-prevY);
  dash.remaining-=moved;
  // 敵が突撃軌道に触れたら、当たり判定を1回だけ発生させる。
@@ -292,7 +433,7 @@ function activeAttack(){
             selected==='lisa'?{cool:1.05,range:143,arc:105,dmg:26,br:11,label:'DOUBLE SLASH',color:'#c9b1ff'}:
                                {cool:2.25,range:470,arc:22,dmg:97,br:30,label:'PIERCE SHOT',color:'#ffd39a'};
  attackCD=spec.cool;
- const dir=p.a,found=enemies.filter(e=>e.hp>0&&visibleEnemy(e,0)&&dst(p,e)<=spec.range+e.r&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),dir))<spec.arc*Math.PI/360).sort((a,b)=>dst(p,a)-dst(p,b));
+ const dir=p.a,found=enemies.filter(e=>e.hp>0&&visibleEnemy(e,0)&&clearLine(p.x,p.y,e.x,e.y)&&dst(p,e)<=spec.range+e.r&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),dir))<spec.arc*Math.PI/360).sort((a,b)=>dst(p,a)-dst(p,b));
  const targets=selected==='lisa'?found.slice(0,2):found.slice(0,1);
  for(const e of [...targets]){
   tagHit(e,spec.dmg,spec.br);
@@ -336,9 +477,9 @@ function defend(){
  hud();
 }
 function special(){if(phase!=='play'||paused||scut>0||p.s<100||dorothyMode>0)return;p.s=0;scut=.62;scutType=selected;scutFired=false;say(lines[selected].special,'special',2.9,3);hud()}
-function fireSpecial(){if(phase!=='play')return;const t=models[selected];if(selected==='sylvia'||selected==='lisa'){const wide=selected==='sylvia';const range=wide?t.range+130:t.range+80,arc=wide?1.22:.37;const targets=enemies.filter(e=>dst(p,e)<range+e.r&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),p.a))<arc);for(const e of [...targets]){tagHit(e,wide?148:285,wide?30:62,true);if(enemies.includes(e))e.stun=Math.max(e.stun,wide?1.0:1.5)}notice=targets.length?t.s:'MISSED';particlesAt(p.x,p.y,wide?'#9af5ff':'#ffd28d',36)}else if(selected==='ayame'){const targets=enemies.filter(e=>dst(p,e)<480+e.r);for(const e of [...targets])tagHit(e,260,55,true);notice=t.s;particlesAt(p.x,p.y,'#ffc08b',70)}else{dorothyMode=9;attackCD=0;dodge=9;notice='OVERLOAD / 9s';particlesAt(p.x,p.y,'#e7adff',45)}noticeT=.95;hitFlash=.20;shake=9;hud()}
+function fireSpecial(){if(phase!=='play')return;const t=models[selected];if(selected==='sylvia'||selected==='lisa'){const wide=selected==='sylvia';const range=wide?t.range+130:t.range+80,arc=wide?1.22:.37;const targets=enemies.filter(e=>clearLine(p.x,p.y,e.x,e.y)&&dst(p,e)<range+e.r&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),p.a))<arc);for(const e of [...targets]){tagHit(e,wide?148:285,wide?30:62,true);if(enemies.includes(e))e.stun=Math.max(e.stun,wide?1.0:1.5)}notice=targets.length?t.s:'MISSED';particlesAt(p.x,p.y,wide?'#9af5ff':'#ffd28d',36)}else if(selected==='ayame'){const targets=enemies.filter(e=>clearLine(p.x,p.y,e.x,e.y)&&dst(p,e)<480+e.r);for(const e of [...targets])tagHit(e,260,55,true);notice=t.s;particlesAt(p.x,p.y,'#ffc08b',70)}else{dorothyMode=9;attackCD=0;dodge=9;notice='OVERLOAD / 9s';particlesAt(p.x,p.y,'#e7adff',45)}noticeT=.95;hitFlash=.20;shake=9;hud()}
 function rewardDorothyDodge(e){if(dodgeClaims.has(e.id))return;dodgeClaims.add(e.id);p.s=clamp(p.s+38,0,100);e.br=clamp(e.br+45,0,100);e.stun=Math.max(e.stun,.5);floatText(p.x,p.y-46,'PERFECT EVADE +38','#d4b8ff',true);particlesAt(p.x,p.y,'#d4b8ff',22);notice='DODGE SUCCESS +38';noticeT=.85;say('読めたわ。次はこちらの番！','advantage',2.5,1)}
-function enemyStrike(e){const range=e.type==='ranger'?330:e.type==='boss'?420:220,width=e.type==='boss'?.68:.58;const hit=dst(p,e)<range&&Math.abs(adiff(Math.atan2(p.y-e.y,p.x-e.x),e.dir))<width;const from=dodgeOrigin;const nearMiss=selected==='dorothy'&&dorothyMode<=0&&dodge>.30&&from&&Math.hypot(from.x-e.x,from.y-e.y)<range&&Math.abs(adiff(Math.atan2(from.y-e.y,from.x-e.x),e.dir))<width;if(!hit){if(nearMiss)rewardDorothyDodge(e);return;}if(selected==='sylvia'&&guard>0){const perfect=guard>1.22;const dmg=perfect?0:Math.ceil((e.type==='boss'?30:wave===2?15:10)*.20);p.hp-=dmg;p.s=clamp(p.s+(perfect?25:10),0,100);e.br=clamp(e.br+(perfect?50:15),0,100);if(perfect)e.stun=.85;
+function enemyStrike(e){const range=e.type==='ranger'?330:e.type==='boss'?420:220,width=e.type==='boss'?.68:.58;const hit=clearLine(e.x,e.y,p.x,p.y)&&dst(p,e)<range&&Math.abs(adiff(Math.atan2(p.y-e.y,p.x-e.x),e.dir))<width;const from=dodgeOrigin;const nearMiss=selected==='dorothy'&&dorothyMode<=0&&dodge>.30&&from&&Math.hypot(from.x-e.x,from.y-e.y)<range&&Math.abs(adiff(Math.atan2(from.y-e.y,from.x-e.x),e.dir))<width;if(!hit){if(nearMiss)rewardDorothyDodge(e);return;}if(selected==='sylvia'&&guard>0){const perfect=guard>1.22;const dmg=perfect?0:Math.ceil((e.type==='boss'?30:wave===2?15:10)*.20);p.hp-=dmg;p.s=clamp(p.s+(perfect?25:10),0,100);e.br=clamp(e.br+(perfect?50:15),0,100);if(perfect)e.stun=.85;
 // ガード成功なら小さく敵を押し返して、解除後の反撃スペースを作る。
 pushEnemy(e,perfect?62:30);
 floatText(p.x,p.y-46,perfect?'JUST GUARD!':'GUARD!','#8bedf8',true);particlesAt(p.x,p.y,'#8bedf8',19)}else if(dorothyMode>0){floatText(p.x,p.y-35,'INVINCIBLE','#e4c6ff',true)}else if(dodge>0){
@@ -357,11 +498,11 @@ floatText(p.x,p.y-46,perfect?'JUST GUARD!':'GUARD!','#8bedf8',true);particlesAt(
   floatText(p.x,p.y-42,'INVINCIBLE','#b7e8ff');
  }
 }else{p.hp-=e.type==='boss'?30:wave===2?15:10;waveDamaged=true;combo=0;hitStreak=0;comboTime=0;hitFlash=.38;shake=8;floatText(p.x,p.y-35,'DAMAGE!','#ff9ba8',true);say(lines[selected].hurt,'hurt',2.8,3)}if(e.br>=100&&e.stun<=0){e.br=0;e.stun=2.55}if(p.hp<=0)finish(false)}
-function finish(win){phase='end';$('#pause').classList.add('hide');overlay.classList.remove('hide');const ok=win&&(ranks.length<5||score>ranks[ranks.length-1].score||score===ranks[ranks.length-1].score&&elapsed<ranks[ranks.length-1].time);overlay.innerHTML=`<small>MISSION REPORT / v0.26</small><h1>${win?'MISSION CLEAR':'MISSION FAILED'}</h1><p>${selected.toUpperCase()} / ${wave} WAVE<br>スコア：<b>${score.toLocaleString()}</b> / 最大撃破コンボ：${maxCombo} / 最大HIT：${maxHitStreak}<br>タイム：<b>${fmt(elapsed)}</b></p>${ok?'<div class="panel">🏆 TOP 5入賞！ <input id="pilot" maxlength="12" placeholder="PILOT"> <button id="register">登録</button></div>':''}<div id="ranking">${ranksHTML()}</div><button id="retry" class="primary">再挑戦</button><button id="home">タイトルへ</button>`;$('#retry').onclick=start;$('#home').onclick=title;if(ok)$('#register').onclick=()=>{ranks.push({name:($('#pilot').value.trim()||'PILOT').slice(0,12),score,time:elapsed,unit:selected});ranks.sort((a,b)=>b.score-a.score||a.time-b.time);ranks=ranks.slice(0,5);try{localStorage.setItem(KEY,JSON.stringify(ranks))}catch{}$('#ranking').innerHTML=ranksHTML();$('#register').parentElement.remove()}}
+function finish(win){phase='end';$('#pause').classList.add('hide');overlay.classList.remove('hide');const ok=win&&(ranks.length<5||score>ranks[ranks.length-1].score||score===ranks[ranks.length-1].score&&elapsed<ranks[ranks.length-1].time);overlay.innerHTML=`<small>STAGE 01 REPORT / v0.27</small><h1>${win?'MISSION CLEAR':'MISSION FAILED'}</h1><p>${selected.toUpperCase()} / STAGE 01 / ${wave} AREAS<br>スコア：<b>${score.toLocaleString()}</b> / 最大撃破コンボ：${maxCombo} / 最大HIT：${maxHitStreak}<br>タイム：<b>${fmt(elapsed)}</b></p>${ok?'<div class="panel">🏆 TOP 5入賞！ <input id="pilot" maxlength="12" placeholder="PILOT"> <button id="register">登録</button></div>':''}<div id="ranking">${ranksHTML()}</div><button id="retry" class="primary">再挑戦</button><button id="home">タイトルへ</button>`;$('#retry').onclick=start;$('#home').onclick=title;if(ok)$('#register').onclick=()=>{ranks.push({name:($('#pilot').value.trim()||'PILOT').slice(0,12),score,time:elapsed,unit:selected});ranks.sort((a,b)=>b.score-a.score||a.time-b.time);ranks=ranks.slice(0,5);try{localStorage.setItem(KEY,JSON.stringify(ranks))}catch{}$('#ranking').innerHTML=ranksHTML();$('#register').parentElement.remove()}}
 // ============================================================
 // 5. UI 更新：ゲージやクールタイムを画面へ反映
 // ============================================================
-function hud(){if(!p)return;$('#hpText').textContent=`HP ${Math.max(0,Math.ceil(p.hp))}/${p.max}`;$('#hpFill').style.width=`${clamp(p.hp/p.max*100,0,100)}%`;$('#unitText').textContent=selected.toUpperCase();$('#waveText').textContent=`WAVE ${wave} / 3`;$('#targetDetail').textContent=wave===3?'BOSS / BREAK':`${kills} / ${total} ELIMINATED`;const boss=wave===3?enemies[0]:null;$('#bossHp').style.width=wave===3&&boss?`${clamp(boss.hp/boss.max*100,0,100)}%`:'0%';$('#bossBreak').style.width=wave===3&&boss?`${boss.br}%`:'0%';$('#scoreText').textContent=String(score).padStart(6,'0');$('#comboText').textContent=`${hitStreak} HIT / ×${(1+Math.min(combo,10)*.1).toFixed(1)}  ${combo?combo+' K.O.':''}`;$('#comboFill').style.width=`${clamp(comboTime/4*100,0,100)}%`;$('#sFill').style.width=`${p.s}%`;$('#sText').textContent=Math.floor(p.s)+'%';$('#timer').textContent=fmt(elapsed);$('#special').disabled=phase!=='play'||p.s<100||scut>0;$('#def').disabled=phase!=='play'||defCD>0||scut>0;$('#fire').disabled=phase!=='play'||scut>0;$('#def').classList.toggle('warn',phase==='play'&&scut<=0&&enemies.some(e=>e.wind>0)&&defCD<=0);
+function hud(){if(!p)return;$('#hpText').textContent=`HP ${Math.max(0,Math.ceil(p.hp))}/${p.max}`;$('#hpFill').style.width=`${clamp(p.hp/p.max*100,0,100)}%`;$('#unitText').textContent=selected.toUpperCase();$('#waveText').textContent=`AREA ${wave} / 3`;$('#targetDetail').textContent=areaState==='travel'?'NEXT AREA ↑':`残り ${Math.max(0,total-kills)} / ${total} 機`;$('#areaTitle').textContent=`STAGE 01  ·  AREA ${wave}/3　${STAGE.rooms[wave-1].name}`;$('#objective').textContent=areaState==='travel'?'エリアクリア！ ↑ 上へ進む':`敵を全機撃破：残り ${Math.max(0,total-kills)} 機`;$('#areaStatus').classList.toggle('travel',areaState==='travel');document.querySelectorAll('#areaSteps i').forEach((e,i)=>{e.className=i<wave-1||i===wave-1&&areaState==='travel'?'done':i===wave-1?'current':''});const boss=wave===3?enemies[0]:null;$('#bossHp').style.width=wave===3&&boss?`${clamp(boss.hp/boss.max*100,0,100)}%`:'0%';$('#bossBreak').style.width=wave===3&&boss?`${boss.br}%`:'0%';$('#scoreText').textContent=String(score).padStart(6,'0');$('#comboText').textContent=`${hitStreak} HIT / ×${(1+Math.min(combo,10)*.1).toFixed(1)}  ${combo?combo+' K.O.':''}`;$('#comboFill').style.width=`${clamp(comboTime/4*100,0,100)}%`;$('#sFill').style.width=`${p.s}%`;$('#sText').textContent=Math.floor(p.s)+'%';$('#timer').textContent=fmt(elapsed);$('#special').disabled=phase!=='play'||p.s<100||scut>0;$('#def').disabled=phase!=='play'||defCD>0||scut>0;$('#fire').disabled=phase!=='play'||scut>0;$('#def').classList.toggle('warn',phase==='play'&&scut<=0&&enemies.some(e=>e.wind>0)&&defCD<=0);
 $('#aLabel').textContent=selected==='dorothy'?(dorothyMode>0?'突撃':'使い魔'):selected==='sylvia'?'強撃':selected==='lisa'?'連撃':'追尾';
 $('#dLabel').textContent=selected==='dorothy'&&dorothyMode>0?'範囲':models[selected].def;
 $('#sLabel').textContent=selected==='dorothy'&&dorothyMode>0?Math.ceil(dorothyMode)+'秒':'特殊';
@@ -389,25 +530,33 @@ if(faceState!=='normal'&&faceT<=0)setPortrait('normal');else if(faceState==='nor
 // ============================================================
 // 6. ゲームループ：経過時間、移動、敵AI、オート射撃
 // ============================================================
-function tick(dt){if(phase!=='play'||paused)return;clock+=dt;if(scut>0){scut=Math.max(0,scut-dt);if(!scutFired&&scut<=.21){scutFired=true;fireSpecial()}hud();return}elapsed+=dt;if(phaseDelay>0){phaseDelay-=dt;if(phaseDelay<=0)nextWave();hud();return}shotCD=Math.max(0,shotCD-dt);attackCD=Math.max(0,attackCD-dt);defCD=Math.max(0,defCD-dt);guard=Math.max(0,guard-dt);dodge=Math.max(0,dodge-dt);if(dodge<=0)dodgeOrigin=null;over=Math.max(0,over-dt);hitFlash=Math.max(0,hitFlash-dt);shake=Math.max(0,shake-dt*24);noticeT=Math.max(0,noticeT-dt);comboTime=Math.max(0,comboTime-dt);if(comboTime<=0){combo=0;hitStreak=0;}voiceT=Math.max(0,voiceT-dt);if(voiceT===0){if(dialogQueue.length)showDialog(dialogQueue.shift());else{$('#dialog').classList.add('hide');dialogPriority=0}}faceT=Math.max(0,faceT-dt);boost=Math.max(0,boost-dt);skillCD=Math.max(0,skillCD-dt);knockCD=Math.max(0,knockCD-dt);reverseCD=Math.max(0,reverseCD-dt);dorothyMode=Math.max(0,dorothyMode-dt);if(selected==='dorothy'&&dorothyMode===0)p.s=clamp(p.s+dt*1,0,100);
+function tick(dt){if(phase!=='play'||paused)return;clock+=dt;if(scut>0){scut=Math.max(0,scut-dt);if(!scutFired&&scut<=.21){scutFired=true;fireSpecial()}hud();return}elapsed+=dt;if(phaseDelay>0){phaseDelay=Math.max(0,phaseDelay-dt);hud();return}shotCD=Math.max(0,shotCD-dt);attackCD=Math.max(0,attackCD-dt);defCD=Math.max(0,defCD-dt);guard=Math.max(0,guard-dt);dodge=Math.max(0,dodge-dt);if(dodge<=0)dodgeOrigin=null;over=Math.max(0,over-dt);hitFlash=Math.max(0,hitFlash-dt);shake=Math.max(0,shake-dt*24);noticeT=Math.max(0,noticeT-dt);comboTime=Math.max(0,comboTime-dt);if(comboTime<=0){combo=0;hitStreak=0;}voiceT=Math.max(0,voiceT-dt);if(voiceT===0){if(dialogQueue.length)showDialog(dialogQueue.shift());else{$('#dialog').classList.add('hide');dialogPriority=0}}faceT=Math.max(0,faceT-dt);boost=Math.max(0,boost-dt);skillCD=Math.max(0,skillCD-dt);knockCD=Math.max(0,knockCD-dt);reverseCD=Math.max(0,reverseCD-dt);dorothyMode=Math.max(0,dorothyMode-dt);if(selected==='dorothy'&&dorothyMode===0)p.s=clamp(p.s+dt*1,0,100);
 let mx=joy.x+(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),my=joy.y+(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0),l=Math.hypot(mx,my);
 // シルヴィアの構えはスティック入力で任意解除。クールタイムはそのまま。
 if(selected==='sylvia'&&guard>0&&l>.18){guard=0;notice='GUARD RELEASE';noticeT=.3;}
-if(l>.12&&!dash&&guard<=0&&evadeMove<=0){mx/=Math.max(1,l);my/=Math.max(1,l);p.a=Math.atan2(my,mx);let sp=models[selected].speed*(boost>0?2.25:1);p.x=clamp(p.x+mx*sp*dt,25,WORLD.w-25);p.y=clamp(p.y+my*sp*dt,25,WORLD.h-25);if(Math.random()<dt*35)particles.push({x:p.x-mx*10,y:p.y-my*10,vx:-mx*50,vy:-my*50,t:.23,max:.23,c:'#64c9ea'})}
+if(l>.12&&!dash&&guard<=0&&evadeMove<=0){mx/=Math.max(1,l);my/=Math.max(1,l);p.a=Math.atan2(my,mx);let sp=models[selected].speed*(boost>0?2.25:1);circleMove(p,mx*sp*dt,my*sp*dt,25);if(Math.random()<dt*35)particles.push({x:p.x-mx*10,y:p.y-my*10,vx:-mx*50,vy:-my*50,t:.23,max:.23,c:'#64c9ea'})}
 // 回避の移動：ガードと異なり位置を変えながら無敵。時間経過で減速する。
 if(evadeMove>0){
  const move=Math.min(dt,evadeMove),speed=models[selected].speed*2.55*(.65+.35*evadeMove/.42);
- p.x=clamp(p.x+evadeVX*speed*move,25,WORLD.w-25);
- p.y=clamp(p.y+evadeVY*speed*move,25,WORLD.h-25);
+ circleMove(p,evadeVX*speed*move,evadeVY*speed*move,25);
  evadeMove=Math.max(0,evadeMove-dt);
  if(Math.random()<.75)particlesAt(p.x,p.y,'#a6d8ff',2);
 }
 tickRush(dt);
-for(const trail of dashTrails)trail.t-=dt;dashTrails=dashTrails.filter(trail=>trail.t>0);for(const trail of knockTrails)trail.t-=dt;knockTrails=knockTrails.filter(trail=>trail.t>0);for(const e of [...enemies]){e.slow=Math.max(0,(e.slow||0)-dt);if(e.stun>0){e.stun=Math.max(0,e.stun-dt);e.wind=0;e.recover=Math.max(e.recover,.45);continue}if(e.wind>0){e.wind=Math.max(0,e.wind-dt);if(e.wind<=0){enemyStrike(e);e.recover=e.type==='boss'?1.2:.9}continue}if(e.recover>0){e.recover=Math.max(0,e.recover-dt);continue}let a=Math.atan2(p.y-e.y,p.x-e.x),d=dst(p,e),speed=e.move*(e.slow>0?(e.type==='boss'?.8:AYAME_SLOW_RATE):1);const ideal=e.type==='ranger'?260:e.type==='boss'?270:135;if(d>ideal+20){e.x+=Math.cos(a)*speed*dt;e.y+=Math.sin(a)*speed*dt}else if(d<ideal-40){e.x-=Math.cos(a)*speed*.55*dt;e.y-=Math.sin(a)*speed*.55*dt}e.x=clamp(e.x,60,WORLD.w-60);e.y=clamp(e.y,60,WORLD.h-60);e.a=a;e.attackCD-=dt;if(e.attackCD<=0&&d<(e.type==='boss'?450:360)){e.wind=e.type==='boss'?1.5:1.25;e.dir=a;e.attackCD=e.type==='boss'?3.1:rand(2.7,3.7)}}
+maybeAdvanceArea();
+for(const trail of dashTrails)trail.t-=dt;dashTrails=dashTrails.filter(trail=>trail.t>0);for(const trail of knockTrails)trail.t-=dt;knockTrails=knockTrails.filter(trail=>trail.t>0);for(const e of [...enemies]){e.slow=Math.max(0,(e.slow||0)-dt);if(e.stun>0){e.stun=Math.max(0,e.stun-dt);e.wind=0;e.recover=Math.max(e.recover,.45);continue}if(e.wind>0){e.wind=Math.max(0,e.wind-dt);if(e.wind<=0){enemyStrike(e);e.recover=e.type==='boss'?1.2:.9}continue}if(e.recover>0){e.recover=Math.max(0,e.recover-dt);continue}let a=Math.atan2(p.y-e.y,p.x-e.x),d=dst(p,e),speed=e.move*(e.slow>0?(e.type==='boss'?.8:AYAME_SLOW_RATE):1);const ideal=e.type==='ranger'?260:e.type==='boss'?270:135;if(d>ideal+20){circleMove(e,Math.cos(a)*speed*dt,Math.sin(a)*speed*dt,e.r)}else if(d<ideal-40){circleMove(e,-Math.cos(a)*speed*.55*dt,-Math.sin(a)*speed*.55*dt,e.r)}// 直進が障害物で止まったら、箱の側面へ軽く回り込む。
+if(d>ideal+20&&e._lastX!==undefined){
+ const moved=Math.hypot(e.x-e._lastX,e.y-e._lastY);
+ if(moved<speed*dt*.35){
+  const side=e.id%2===0?1:-1;
+  circleMove(e,Math.cos(a+side*.9)*speed*dt,Math.sin(a+side*.9)*speed*dt,e.r);
+ }
+}
+e._lastX=e.x;e._lastY=e.y;e.a=a;e.attackCD-=dt;if(e.attackCD<=0&&clearLine(e.x,e.y,p.x,p.y)&&d<(e.type==='boss'?450:360)){e.wind=e.type==='boss'?1.5:1.25;e.dir=a;e.attackCD=e.type==='boss'?3.1:rand(2.7,3.7)}}
 // 追尾弾は通常攻撃と独立して移動・命中判定。
 tickSeekers(dt);
 tickWings(dt);
-const type=models[selected],targets=enemies.filter(e=>visibleEnemy(e)&&dst(p,e)<=type.range+e.r*.3&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),p.a))<type.arc*Math.PI/360).sort((a,b)=>dst(p,a)-dst(p,b));if(targets.length&&shotCD<=0&&guard<=0&&(selected!=='dorothy'||dorothyMode>0)){shotCD=type.rate*(selected==='dorothy'?.32:1);tagHit(targets[0],type.dmg*(selected==='dorothy'?3.5:1),selected==='dorothy'?5:selected==='lisa'?7:selected==='ayame'?24:12)}
+const type=models[selected],targets=enemies.filter(e=>visibleEnemy(e)&&clearLine(p.x,p.y,e.x,e.y)&&dst(p,e)<=type.range+e.r*.3&&Math.abs(adiff(Math.atan2(e.y-p.y,e.x-p.x),p.a))<type.arc*Math.PI/360).sort((a,b)=>dst(p,a)-dst(p,b));if(targets.length&&shotCD<=0&&guard<=0&&(selected!=='dorothy'||dorothyMode>0)){shotCD=type.rate*(selected==='dorothy'?.32:1);tagHit(targets[0],type.dmg*(selected==='dorothy'?3.5:1),selected==='dorothy'?5:selected==='lisa'?7:selected==='ayame'?24:12)}
 for(const v of bullets)v.t-=dt;bullets=bullets.filter(v=>v.t>0);for(const v of particles){v.x+=v.vx*dt;v.y+=v.vy*dt;v.t-=dt}particles=particles.filter(v=>v.t>0);for(const v of texts){v.y-=dt*35;v.t-=dt}texts=texts.filter(v=>v.t>0);hud()}
 function fit(){let r=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(r.width*dpr));canvas.height=Math.max(1,Math.round(r.height*dpr));ctx.setTransform(dpr,0,0,dpr,0,0)}
 function viewScale(w,h){return Math.min(w/460,h/640,1.02)*.78}
@@ -416,7 +565,7 @@ function visibleEnemy(e,margin=22){const w=canvas.clientWidth,h=canvas.clientHei
 // ============================================================
 // 7. Canvas描画：ワールド座標→画面座標へ変換して描画
 // ============================================================
-function draw(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;const scale=viewScale(w,h);const camera=getCamera(w,h,scale);cam.x=camera.x;cam.y=camera.y;const X=n=>(n-cam.x)*scale,Y=n=>(n-cam.y)*scale;ctx.save();ctx.clearRect(0,0,w,h);ctx.translate(shake?rand(-shake,shake):0,shake?rand(-shake,shake):0);ctx.fillStyle='#10283b';ctx.fillRect(-20,-20,w+40,h+40);const size=80*scale;ctx.strokeStyle='#294c60';ctx.lineWidth=1;for(let x=-(cam.x*scale)%size;x<w;x+=size){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}for(let y=-(cam.y*scale)%size;y<h;y+=size){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}ctx.strokeStyle='#537c8d';ctx.lineWidth=3;ctx.strokeRect(X(20),Y(20),(WORLD.w-40)*scale,(WORLD.h-40)*scale);for(let x=160;x<WORLD.w;x+=420)for(let y=170;y<WORLD.h;y+=460){ctx.fillStyle='#345c6b';ctx.fillRect(X(x)-8,Y(y)-8,16*scale,16*scale);ctx.strokeStyle='#547b8c';ctx.strokeRect(X(x)-13,Y(y)-13,26*scale,26*scale)}
+function draw(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;const scale=viewScale(w,h);const camera=getCamera(w,h,scale);cam.x=camera.x;cam.y=camera.y;const X=n=>(n-cam.x)*scale,Y=n=>(n-cam.y)*scale;ctx.save();ctx.clearRect(0,0,w,h);ctx.translate(shake?rand(-shake,shake):0,shake?rand(-shake,shake):0);ctx.fillStyle='#081b2b';ctx.fillRect(-20,-20,w+40,h+40);stageDrawing(X,Y,scale);
 for(const tr of knockTrails){ctx.save();ctx.globalAlpha=Math.max(0,tr.t/tr.max)*.65;ctx.strokeStyle='#d7b6ff';ctx.lineWidth=7*scale;ctx.setLineDash([6,9]);ctx.beginPath();ctx.moveTo(X(tr.x),Y(tr.y));ctx.lineTo(X(tr.ex),Y(tr.ey));ctx.stroke();ctx.restore()}for(const tr of dashTrails){ctx.save();ctx.globalAlpha=Math.max(0,tr.t/tr.max)*.8;ctx.strokeStyle='#e1afff';ctx.shadowColor='#d3a1ff';ctx.shadowBlur=13;ctx.lineWidth=33*scale;ctx.beginPath();ctx.moveTo(X(tr.x),Y(tr.y));ctx.lineTo(X(tr.ex),Y(tr.ey));ctx.stroke();ctx.lineWidth=4*scale;ctx.strokeStyle='#ffffff';ctx.stroke();ctx.restore()}if(dash&&p){const x=X(p.x),y=Y(p.y);ctx.save();ctx.strokeStyle='#e4b6ff';ctx.globalAlpha=.7;ctx.lineWidth=3;ctx.setLineDash([8,7]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X(p.x+Math.cos(dash.dir)*dash.remaining),Y(p.y+Math.sin(dash.dir)*dash.remaining));ctx.stroke();ctx.restore()}
 // アヤメの制圧追尾弾：追尾してノックバックと減速を与える。
 for(const s of seekers){
@@ -497,11 +646,17 @@ if(dorothyMode>0){ctx.strokeStyle='#ba98e9';ctx.lineWidth=3;ctx.strokeRect(4,4,w
  ctx.setLineDash([7,5]);ctx.beginPath();ctx.arc(px,py,29*scale,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
  ctx.restore();
 }
+if(areaState==='travel'&&phase==='play'){
+ ctx.save();ctx.fillStyle='#a0f8df';ctx.strokeStyle='#2a6e66';ctx.lineWidth=2;
+ ctx.font='900 13px system-ui';ctx.textAlign='center';
+ ctx.fillText('↑  NEXT AREA',w/2,148);
+ ctx.restore();
+}
 if(hitFlash>0){ctx.fillStyle=`rgba(255,208,221,${hitFlash*.35})`;ctx.fillRect(0,0,w,h)}if(noticeT>0){ctx.textAlign='center';ctx.fillStyle='#ffe5a3';ctx.font='900 22px system-ui';ctx.fillText(notice,w/2,h*.20)}
 if(scut>0){const t=scut/.62,col=scutType==='sylvia'?'#86e6f0':scutType==='lisa'?'#d0aaff':scutType==='ayame'?'#ffc48f':'#f1a7df',name=models[scutType].s.toUpperCase();ctx.fillStyle='#081522b9';ctx.fillRect(0,0,w,h);ctx.fillStyle='#16384eea';ctx.beginPath();ctx.moveTo(0,h*.22);ctx.lineTo(w,h*.15);ctx.lineTo(w,h*.36);ctx.lineTo(0,h*.42);ctx.closePath();ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke();const key=scutType+'Cutin';if(imgs[key]?.ready){const im=imgs[key].im,iw=Math.min(w*.42,190),ih=h*.25;ctx.drawImage(im,9,h*.17,iw,ih)}else{ctx.font='900 52px system-ui';ctx.fillStyle=col;ctx.textAlign='left';ctx.fillText(models[scutType].name[0],24,h*.34)}ctx.fillStyle=col;ctx.textAlign='center';ctx.font='900 14px system-ui';ctx.fillText('SPECIAL ACTION',w*.5,h*.245);ctx.fillStyle='#fff';ctx.font='900 25px system-ui';ctx.fillText(name,w*.5,h*.29);ctx.fillStyle='#243e59';ctx.fillRect(w*.2,h*.77,w*.6,12);ctx.fillStyle=col;ctx.fillRect(w*.2,h*.77,w*.6*(1-t),12);ctx.font='bold 12px system-ui';ctx.fillText('CHARGING',w*.5,h*.75)}ctx.restore()}
 function frame(ms){const dt=last?Math.min(.035,(ms-last)/1000):0;last=ms;tick(dt);draw();requestAnimationFrame(frame)}
 // ============================================================
-// 8. 入力：スマホの仮想スティックとPCキー操作
+// 8. 入力：フィールド全域の透明ドラッグとPCキー操作
 // ============================================================
 function dragToJoy(ev){const r=canvas.getBoundingClientRect(),x=ev.clientX-r.left,y=ev.clientY-r.top,dx=x-joyOrigin.x,dy=y-joyOrigin.y,l=Math.hypot(dx,dy)||1,max=84,strength=Math.min(1,l/max);joy={x:dx/l*strength,y:dy/l*strength}}
 function resetDrag(){movePointerId=null;joy={x:0,y:0}}
